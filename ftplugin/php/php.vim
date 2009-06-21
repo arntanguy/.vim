@@ -49,8 +49,13 @@ endfunction
 :set errorformat=%m\ in\ %f\ on\ line\ %l
 
 " Map F9 to check the file for syntax
-:noremap <F9> :call PHPCheckSyntax()<CR><c-l>
+noremap <F9> :call PHPCheckSyntax()<CR><c-l>
 
 let php_sql_query = 1 "Coloration des requetes SQL
 let php_htmlInStrings = 1 "Coloration des balises html
 
+
+" ==== PHP plugin ==== "
+inoremap <C-P> <ESC>:call PhpDocSingle()<CR>i
+nnoremap <C-P> :call PhpDocSingle()<CR>
+vnoremap <C-P> :call PhpDocRange()<CR> 

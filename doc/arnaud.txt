@@ -17,6 +17,8 @@ GPL v2 or later (at your option)
 	     Alternate..............................: |a-alternate|
          ManPageView............................: |a-manpageview|
          Matchit................................: |a-matchit|
+         NERD_Commenter.........................: |a-nerdcommenter|
+         PhpDocumentor..........................: |a-phpdocumentor|
 
 ==============================================================================
 2. Key mappings                         *a-key* *a-keys* {{{1
@@ -87,3 +89,49 @@ GPL v2 or later (at your option)
     The documentation (included in the zip file) explains how to configure
     the script for a new language and how to modify the defaults.
     See |matchit.txt|
+
+    NERDCOMMENTER                           *a-nerdcommenter* {{{2
+    Nerd commenter allow to comment code according to the file type.
+    The most useful mappings are:
+
+    ,cc |NERDComComment|
+    Comments out the current line or text selected in visual mode.
+    ,cy is the same, but yank before commenting
+
+    ,cl OR ,cr OR ,cb |NERDComAlignedComment|
+    Same as |NERDComComment| except that the delimiters are aligned down the
+    left side (,cl), the right side (,cr) or both sides
+    (,cb).
+
+    ,cI |NERDComPrependComment| ,cA |NERDComAppendComment|
+    Comment before/after the current line. Adds comment delimiters to the end of line and goes
+    into insert mode  between them.
+
+    ,c<space> |NERDComToggleComment|
+    Toggles the comment state of the selected line(s). If the topmost selected
+    line is commented, all selected lines are uncommented and vice versa.
+
+    ,cu |NERDComUncommentLine|
+    Uncomments the selected line(s).
+
+    ,cm |NERDComMinimalComment|
+    Comments the given lines using only one set of multipart delimiters if
+    possible.
+
+    ,ci |NERDComInvertComment|
+    Toggles the comment state of the selected line(s) individually. Each
+    selected
+    line that is commented is uncommented and vice versa.
+
+    ,cs |NERDComSexyComment|
+    Comments out the selected lines ``sexily''. Useful for doc, headers...
+
+    ,ca |NERDComAltDelim|
+    /*Switches to the alternative set of delimiters.*/
+
+    See |NERDCommenter|
+
+    PHPDOCUMENTOR                                *a-phpdocumentor* *a-phpd* {{{2
+    PhpDocumentor is a plugin for generating phpDocumentor documentation
+    blocs.
+    In my configuration, it is called with <C-P>, in every mode.
