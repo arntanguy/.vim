@@ -19,6 +19,7 @@ GPL v2 or later (at your option)
          Matchit................................: |a-matchit|
          NERD_Commenter.........................: |a-nerdcommenter|
          PhpDocumentor..........................: |a-phpdocumentor|
+         DoxygenToolkit.........................: |a-doxygen|
 
 ==============================================================================
 2. Key mappings                         *a-key* *a-keys* {{{1
@@ -29,6 +30,8 @@ GPL v2 or later (at your option)
        <F2>     Ctags rebuild. In insert and normal modes
        <F9>     Build the file or project. It's a ftplugin, so it may not be
                 mapped in every mode
+       <C-P>    Generate doc for a function (or class). It is used by
+               ftplugins, at least the php one.
 
 3. Plugins                  *a-plugins* *a-plugin* {{{1
 
@@ -90,7 +93,7 @@ GPL v2 or later (at your option)
     the script for a new language and how to modify the defaults.
     See |matchit.txt|
 
-    NERDCOMMENTER                           *a-nerdcommenter* {{{2
+    NERDCOMMENTER                      *a-nerd*  *a-nerdcommenter* {{{2
     Nerd commenter allow to comment code according to the file type.
     The most useful mappings are:
 
@@ -135,3 +138,9 @@ GPL v2 or later (at your option)
     PhpDocumentor is a plugin for generating phpDocumentor documentation
     blocs.
     In my configuration, it is called with <C-P>, in every mode.
+
+    DOXYGEN                                                 *a-doxygen* {{{2
+    It is a plugin for autocreatin doxygen commenting blocs.
+    Move on a function declaration, and :Dox or <C-P>
+    See http://www.vim.org/scripts/script.php?script_id=987 for more details
+    and configuration variables
