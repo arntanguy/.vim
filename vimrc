@@ -16,6 +16,7 @@ set ruler
 syntax on
 
 set autowriteall
+autocmd QuickFixCmdPre make w
 set wildmenu
 set wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz
 
@@ -50,11 +51,37 @@ set isfname-==
 set laststatus=2
 set statusline=%{VimBuddy()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
-
 " ===== PLUGINS CONFIG =====
 
 " ** Plugin Project
-nmap <F1> :Project
+nmap <F1> :Project<cr>
 " Quick help:
 " - \c  : create a project
 " - <space> : extend the project window, or reduce it
+"
+
+set tags+=~/.vim/tags/qt4
+set tags+=~/.vim/tags/sfml
+set tags+=~/.vim/tags/stl
+
+" build tags of your own project with CTRL+F12
+"map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+noremap <F2> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+inoremap <F2> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_MayCompleteDot = 1
+let OmniCpp_MayCompleteArrow = 1
+let OmniCpp_MayCompleteScope = 1
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+
+"TagList
+let Tlist_Show_One_File = 1

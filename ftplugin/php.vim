@@ -49,5 +49,5 @@ endfunction
 :set errorformat=%m\ in\ %f\ on\ line\ %l
 
 " Map F9 to check the file for syntax
-:noremap <F9> :call PHPCheckSyntax()<CR>
+:noremap <F9> :call PHPCheckSyntax()<CR><c-l>
 
