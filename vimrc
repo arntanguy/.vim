@@ -6,6 +6,8 @@ vmap s{ mlo<esc>i{<esc>`lla}
 vmap s( mlo<esc>i(<esc>`lla)
 vmap s[ mlo<esc>i[<esc>`lla]
 
+nnoremap <F6> :SearchInVar &path :e<space>./
+nnoremap <F7> :SearchInVar &path :tabe<space>./
 
 set foldmethod=syntax
 set nocompatible
@@ -85,3 +87,5 @@ set completeopt=menuone,menu,longest,preview
 
 "TagList
 let Tlist_Show_One_File = 1
+
+

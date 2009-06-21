@@ -51,3 +51,6 @@ endfunction
 " Map F9 to check the file for syntax
 :noremap <F9> :call PHPCheckSyntax()<CR><c-l>
 
+let php_sql_query = 1 "Coloration des requetes SQL
+let php_htmlInStrings = 1 "Coloration des balises html
+
