@@ -3,4 +3,10 @@ All the stuff is under GNU/GPL, version 2 or any later version (at your option).
 
 - my .vimrc
 - some plugins
-- snipmate for snippets, some of mine snippets (java...)
+    - snipmate for snippets, some of mine snippets (java...)
+    - taglist for the tags. Use :TListToogle to show the list
+    - Projects for project management.
+    - OmniCppComplete - NOT WORKING
+    - manpageView for php documentation in vim
+    - a.vim for switching beetween .h and .cpp files
+

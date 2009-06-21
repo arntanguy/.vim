@@ -37,7 +37,17 @@ endfunction
 "to remap \1 on ,1
 nmap ,1 \1
 
-" F9 will do a PHP lint ! (ie: building test)
-set makeprg="php -l %"
-nmap <F1> :make<cr>
+function! PHPCheckSyntax()
+  let winnum =winnr() " get current window number
+  silent make -l %
+  cw " open the error window if it contains error
+  " return to the window with cursor set on the line of the first error (if any)
+  execute winnum . "wincmd w"
+endfunction
+
+:setl makeprg=php
+:set errorformat=%m\ in\ %f\ on\ line\ %l
+
+" Map F9 to check the file for syntax
+:noremap <F9> :call PHPCheckSyntax()<CR>
 
