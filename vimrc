@@ -1,11 +1,12 @@
+let g:author="TANGUY Arnaud"
+let g:email="arn.tanguy@gmail.com"
+let g:licence="GNU GPL v2 or later (at your option)"
+
 " ====== Mappings ===== "
 " 'cd' towards the dir in which is the file edited
 map ,cd :cd %:p:h<CR>
-" Surround selection with caracters
-vmap s{ mlo<esc>i{<esc>`lla}
-vmap s( mlo<esc>i(<esc>`lla)
-vmap s[ mlo<esc>i[<esc>`lla]
 
+nnoremap <F4> command! -nargs=0 GHPH call <SID>GrabFromHeaderPasteInSource(0,0,3)
 nnoremap <F6> :SearchInVar &path :e<space>./
 nnoremap <F7> :SearchInVar &path :tabe<space>./
 
@@ -23,7 +24,9 @@ set wildmenu
 set wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz
 
 "set ignorecase
-"set smartcase
+"Case sensitive search only if an upper case character is included in the
+"search pattern :)
+set smartcase
 set hlsearch
 set incsearch
 filetype plugin on
@@ -87,5 +90,4 @@ set completeopt=menuone,menu,longest,preview
 
 "TagList
 let Tlist_Show_One_File = 1
-
 

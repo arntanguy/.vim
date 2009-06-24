@@ -28,7 +28,7 @@ runtime! ~/.vim/plugin/Project.vim
 " Create tags with '\1' command
 function! Phptags()   
     "change exclude for your project, here it's a good exclude for Copix temp and var files"
-    let cmd = '!ctags -f .tags -h ".php" -R --exclude="\.svn" --exclude="./var" --exclude="./temp" --totals=yes --tag-relative=yes'
+    let cmd = '!ctags -f .tags -h ".php" -R --exclude="\.svn" --exclude="\.git" --exclude="./var" --exclude="./temp" --totals=yes --tag-relative=yes'
     exec cmd
     set tags=.tags
 endfunction

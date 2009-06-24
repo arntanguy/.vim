@@ -7,7 +7,7 @@ snippet main
 	}
 # #include <...>
 snippet inc
-	#include <${1:stdio}.h>${2}
+	#include <${1:stdio.h}>${2}
 # #include "..."
 snippet Inc
 	#include "${1:`Filename("$1.h")`}"${2}
@@ -15,23 +15,23 @@ snippet Inc
 ##define ${1:SYMBOL} ${2:value}
 snippet Def
 	#ifndef $1
-	#define ${1:`Filename('__$1__', 'name')`} 
+	#define ${1:`Filename('__$1__', 'name')`}
 
 	${2}
 
 	#endif${3}
 snippet def
-	#define 
+	#define
 # Header Include-Guard
 # (the randomizer code is taken directly from TextMate; it could probably be
 # cleaner, I don't know how to do it in vim script)
 snippet once
 	#ifndef ${1:`toupper(Filename('', 'UNTITLED').'_'.system("/usr/bin/ruby -e 'print (rand * 2821109907455).round.to_s(36)'"))`}
-	
+
 	#define $1
-	
+
 	${2}
-	
+
 	#endif /* end of include guard: $1 */
 # If Condition
 snippet if
@@ -98,7 +98,7 @@ snippet fpr
 
 
 #c++
-snippet class 
+snippet class
 	class ${1:class_name} {
 		private:
 			${2:/* Private vars */}
