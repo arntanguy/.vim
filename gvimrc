@@ -1,5 +1,5 @@
 "colorscheme darkspectrum
-colorscheme desert
+colorscheme herald
 " Remove menu bar
 " set guioptions-=m
 "
