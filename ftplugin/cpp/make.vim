@@ -163,11 +163,11 @@ function! s:CheckInPath(includesList)
     for inc  in includes
       let mpath="**,/usr/include/**"
       let found = findfile(inc, mpath)
-      if found != "" 
-          let results["global"] += [inc] 
+      if found != ""
+          let results["global"] += [inc]
       else
           " XXX : strange, why regex don't works with findfile ?
-          let found = findfile(inc.".h", mpath) 
+          let found = findfile(inc.".h", mpath)
           if(found != "")
               let results["local"] += [found]
           else
@@ -242,7 +242,7 @@ function s:AddIncludes(includesDict)
         for i in a:includesDict["unmatched"]
             echomsg "unmatched ".i
         endfor
-        
+
         " Once the includes are added, rebuild
         silent! execute &makeprg
     endif
@@ -255,13 +255,19 @@ endfunction
 " Args     : None
 " Returns  : 1 if path1 is equal to path2, 0 otherwise.
 " Author   : TANGUY Arnaud <arn.tanguy@gmail.com>
-function! s:Make()
-    " XXX: restore this line when developpement ends
-    "silent! exe &makeprg
+function! s:MakeIncludes()
     exe &makeprg
-    exe "normal <c-r>"
     let includes = s:GetMissingIncludes()
     call s:AddIncludes(includes)
+endf
+
+" Function : s:Make
+" Purpose  :
+" Args     :
+" Returns  :
+" Author   : TANGUY Arnaud
+function s:Make()
+    silent! exe &makeprg
     let winnum =winnr() " get current window number
     " g:quickfix_size lines big for the quickfix window
     exe "cope ".g:quickfix_size
@@ -269,12 +275,15 @@ function! s:Make()
     cw
     " Go to the first error
     execute winnum . "wincmd w"
-endf
+endfunction
 
+if (!exists(":MakeIncludes"))
+    com! -nargs=0 MakeIncludes   call s:MakeIncludes()
+endif
 if (!exists(":Make"))
-    com! -nargs=0 Make		call s:Make()
+    com! -nargs=0 Make  call s:Make()
 else
-    com! -nargs=0 MakeIncludes   call s:Make()
+    com! -nargs=0 MyMake  call s:Make()
 endif
 
 let &cpo=s:cpo_save

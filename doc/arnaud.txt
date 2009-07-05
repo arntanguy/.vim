@@ -30,7 +30,7 @@ GPL v2 or later (at your option)
        <F2>     Ctags rebuild. In insert and normal modes
        <F9>     Build the file or project. It's a ftplugin, so it may not be
                 mapped in every mode
-       <C-P>    Generate doc for a function (or class). It is used by
+       <C-D>    Generate doc for a function (or class). It is used by
                ftplugins, at least the php one.
 
 3. Plugins                  *a-plugins* *a-plugin* {{{1

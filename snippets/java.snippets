@@ -52,10 +52,11 @@ snippet try
 
 # Class
 snippet class 
-	public class ${1:class_name} {
-		${2:/* Private vars */}
-		public $1();
-		public ~$1();
+	public class ${1:`expand('%:t:r')`} {
+		public $1(${2}) {
+		}
+		public ~$1() {
+		}
 
 		${3:/* Methods */}
 	};

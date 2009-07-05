@@ -1,4 +1,4 @@
 " ==== cpp plugins ==== "
-inoremap <C-P> <ESC>:Dox<CR>i
-nnoremap <C-P> :Dox<CR>
-vnoremap <C-P> :Dox<CR> 
+inoremap <C-D> <ESC>:Dox<CR>i
+nnoremap <C-D> :Dox<CR>
+vnoremap <C-D> :Dox<CR>

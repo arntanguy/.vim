@@ -1,0 +1,347 @@
+
+% VIM Quick Reference Card - Carte de Reference Rapide VIM
+% Copyright (c) 2002 Laurent Gregoire.
+% TeX Format - Version Francaise
+
+% Note: Mettez en commentaire la ligne suivante si vous voulez generer
+% le fichier par vous-meme, dans les format DVI et PDF.
+% Enlevez le commentaire sur les 3 suivantes pour generer en PDF. 
+% commande DVI : tex vimqrc-fr.tex
+% commande PDF : pdftex vimqrc-fr.tex
+
+\input outopt.tex
+
+% \pdfoutput=1
+% \pdfpageheight=21cm
+% \pdfpagewidth=29.7cm
+
+% Font definitions
+\font\bigbf=cmb12
+\font\smallrm=cmr8
+\font\smalltt=cmtt8
+\font\tinyit=cmmi5
+
+\def\title#1{\hfil{\bf #1}\hfil\par\vskip 2pt\hrule}
+\def\cm#1#2{{\tt#1}\dotfill#2\par}
+\def\cn#1{\hfill$\lfloor$ #1\par}
+\def\sect#1{\vskip 0.7cm {\it#1\/}\par}
+
+% Characters definitions
+\def\bs{$\backslash$}
+\def\backspace{$\leftarrow$}
+\def\ctrl{{\rm\char94}\kern-1pt}
+\def\enter{$\hookleftarrow$}
+\def\or{\thinspace{\tinyit{ou}}\thinspace}
+\def\key#1{$\langle${\rm{\it#1\/}}$\rangle$}
+\def\rapos{\char125}
+\def\lapos{\char123}
+\def\bs{\char92}
+\def\tild{\char126}
+
+% Three columns definitions
+\frenchspacing
+\parindent 0pt
+\nopagenumbers
+\hoffset=-1.56cm
+\voffset=-1.54cm
+\newdimen\fullhsize
+\fullhsize=27.9cm
+\hsize=8.5cm
+\vsize=19cm
+\def\fullline{\hbox to\fullhsize}
+\let\lr=L
+\newbox\leftcolumn
+\newbox\midcolumn
+\output={
+  \if L\lr
+    \global\setbox\leftcolumn=\columnbox
+    \global\let\lr=M
+  \else\if M\lr
+    \global\setbox\midcolumn=\columnbox
+    \global\let\lr=R
+  \else
+    \tripleformat
+    \global\let\lr=L
+  \fi\fi
+  \ifnum\outputpenalty>-20000
+  \else
+    \dosupereject
+  \fi}
+\def\tripleformat{
+  \shipout\vbox{\fullline{\box\leftcolumn\hfil\box\midcolumn\hfil\columnbox}}
+  \advancepageno}
+\def\columnbox{\leftline{\pagebody}}
+
+% Card content
+% Header
+%\hrule\vskip 3pt
+\title{VIM --- CARTE DE R\'EF\'ERENCE RAPIDE}
+
+\sect{Mouvement simple}
+\cm{h l k j}{lettre \`a gauche, droite~; ligne en haut, bas}
+\cm{b w}{mot \`a gauche, droite}
+\cm{ge e}{fin du mot \`a gauche, droite}
+\cm{\lapos\ \rapos}{d\'ebut du paragraphe pr\'ec\'edent, suivant}
+\cm{( )}{d\'ebut de la phrase pr\'ec\'edente, suivante}
+\cm{0 \^\ \$}{d\'ebut, premi\`ere, derni\`ere lettre de la ligne}
+\cm{$n$G $n$gg}{ligne $n$, par d\'efaut la derni\`ere, premi\`ere}
+\cm{$n$\%}{pourcentage $n$ du document {\it($n$ obligatoire)\/}}
+\cm{$n|$}{colonne $n$ de la ligne courante}
+\cm{\%}{autre parenth\`ese, crochet, commentaire, {\tt\#define}}
+\cm{$n$H $n$L}{ligne $n$ depuis le d\'ebut, la fin de la fen\^etre}
+\cm{M}{milieu de la fen\^etre}
+
+\sect{Insertion \& remplacement $\to$ mode insertion}
+\cm{i a}{insertion avant, apr\`es le curseur}
+\cm{I A}{insertion au d\'ebut, fin de ligne}
+\cm{gI}{insertion \`a la premi\`ere colonne}
+\cm{o O}{nouvelle ligne au dessous, dessus du curseur}
+\cm{r$c$}{remplace la lettre sous le curseur par $c$}
+\cm{gr$c$}{comme {\tt r}, mais sans changer le formattage}
+\cm{R}{remplace le texte \`a partir du curseur}
+\cm{gR}{comme {\tt R}, mais sans changer le formattage}
+\cm{c$m$}{remplace le texte du mouvement $m$}
+\cm{cc\or S}{remplace la ligne courante}
+\cm{C}{remplace jusqu'\`a la fin de la ligne}
+\cm{s}{remplace un caract\`ere et ins\`ere}
+\cm{\tild}{change la casse et avance d'une lettre}
+\cm{g\tild{$m$}}{change la casse du mouvement $m$}
+\cm{gu$m$ gU$m$}{$\to$ minusc., majusc. le texte du mvt. $m$}
+\cm{$<$$m$ $>$$m$}{d\'ecale \`a gauche, droite le texte du mvt. $m$}
+\cm{$n$$<$\kern-3pt$<$ $n$$>$\kern-3pt$>$}{d\'ecale $n$ lignes \`a gauche, droite}
+
+\sect{Suppression}
+\cm{x X}{supprime le caract\`ere sous, avant le curseur}
+\cm{d$m$}{supprime le texte du mouvement $m$}
+\cm{dd D}{supprime la ligne courante, la fin de la ligne}
+\cm{J gJ}{jointe la ligne courante et suivante, sans espace}
+\cm{:$r$d\enter}{supprime les lignes d'intervalle $r$}
+\cm{:$r$d$x$\enter}{supprime l'intervalle $r$ dans le registre $x$}
+
+\sect{Mode insertion}
+\cm{\ctrl V$c$ \ctrl V$n$}{ins\`ere le car. $c$ litt\'eralement, valeur d\'ec. $n$}
+% \cm{\ctrl V$n$}{insert decimal value of character}
+\cm{\ctrl A}{ins\`ere le texte pr\'ec\'edemment ins\'er\'e}
+\cm{\ctrl @}{comme {\tt\ctrl A} \& stoppe l'insertion $\to$ mode commande}
+\cm{\ctrl R$x$ \ctrl R\ctrl R$x$}{ins\`ere le contenu du reg. $x$, litt\'eralement}
+\cm{\ctrl N \ctrl P}{saisie automatique avant, apr\`es le curseur}
+\cm{\ctrl W}{supprime le mot avant le curseur}
+\cm{\ctrl U}{supprime le texte ins\'er\'e dans la ligne en cours}
+\cm{\ctrl D \ctrl T}{d\'ecale \`a gauche, droite d'une tabulation}
+\cm{\ctrl K$c_1$$c_2$\or $c_1$\kern-1pt\backspace$c_2$}{saisie le digraphe $\{c_1,c_2\}$}
+\cm{\ctrl O$c$}{ex\'ecute $c$ en mode commande temporaire}
+\cm{\ctrl X\ctrl E \ctrl X\ctrl Y}{d\'efilement haut, bas}
+\cm{\key{esc}\or \ctrl[}{abandonne l'\'edition $\to$ mode commande}
+
+\sect{Copie}
+\cm{"$x$}{utilise le registre $x$ pour la prochaine action}
+\cm{:reg\enter}{affiche le contenu de tous les registres}
+\cm{:reg $x$\enter}{affiche le contenu du/des registre(s) $x$}
+\cm{y$m$}{copie le texte de la commande de mouvement $m$}
+\cm{yy\or Y}{copie la ligne courante}
+\cm{p P}{colle apr\`es, avant la position du curseur}
+\cm{]p [p}{comme {\tt p}, {\tt P}, avec ajustement de l'indentation}
+\cm{gp gP}{comme {\tt p}, {\tt P}, avec le curseur \`a la fin du texte}
+
+\sect{Insertion avanc\'ee}
+\cm{g?$m$}{encode en {\it rot13\/} le texte de mouvement $m$}
+\cm{$n$\ctrl A $n$\ctrl X}{$+n$, $-n$ au nombre sous le curseur}
+\cm{gq$m$}{justifie le texte du mouvement $m$}
+\cm{:$r$ce $w$\enter}{centre les lignes $r$ \`a la largeur $w$}
+\cm{:$r$le $i$\enter}{aligne \`a la colonne $i$ les lignes $r$}
+\cm{:$r$ri $w$\enter}{aligne \`a droite les lignes $r$ \`a la largeur $w$}
+\cm{!$m$$c$\enter}{filtre les lignes du mvt. $m$ avec la cmd. $c$}
+\cm{$n$!!$c$\enter}{filtre $n$ lignes avec la commande $c$}
+\cm{:$r$!$c$\enter}{filtre l'intervalle $r$ avec la commande $c$}
+
+\sect{Mode visuel}
+\cm{v V \ctrl V}{s\'electionne des lettres, lignes, blocs}
+\cm{o}{\'echange le curseur avec le d\'ebut de la s\'election}
+\cm{gv}{d\'emarre la s\'election \`a la position de la pr\'ec\'edente}
+\cm{aw as ap}{s\'electionne un(e) mot, phrase, paragraphe}
+\cm{ab aB}{s\'electionne un bloc ( ), un bloc {\tt\lapos} {\tt\rapos}}
+
+\vskip 1cm
+\sect{Annulation, r\'ep\'etition \& registres}
+\cm{u U}{annule une commande, restaure la ligne}
+\cm{.\thinspace\thinspace\ctrl R}{r\'ep\`ete une commande, annule l'annulation}
+\cm{$n$.\ }{r\'ep\`ete la commande avec le nombre $n$}
+\cm{q$c$ q$C$}{enregistre, ajoute la frappe au registre $c$}
+\cm{q}{stoppe l'enregistrement}
+\cm{@$c$}{ex\'ecute le contenu du registre $c$}
+\cm{@@}{r\'ep\`ete la commande {\tt @} pr\'ec\'edente}
+\cm{:@$c$\enter}{ex\'ecute le registre $c$ comme une commande {\it Ex\/}}
+\cm{:$r$g/$p$/$c$\enter}{ex\'ecute la commande {\it Ex\/} $c$}
+\cn{sur l'intervalle $r$ o\`u le motif $p$ correspond}
+
+\vskip -0.2cm
+\sect{Mouvement complexe}
+\cm{- +}{ligne en haut, bas sur le 1er caract\`ere non blanc}
+\cm{B W}{mot s\'epar\'e par un espace \`a gauche, droite}
+\cm{gE E}{fin du mot s\'epar\'e par un espace \`a gauche, droite}
+\cm{$n$\_}{$n-1$ lignes en bas sur le 1er caract\`ere non blanc}
+\cm{g0 gm}{d\'ebut, milieu de ligne d'{\it\'ecran\/}}
+\cm{g\^\ g\$}{premier, dernier caract\`ere de la ligne d'{\it\'ecran\/}}
+\cm{gk gj}{ligne d'{\it\'ecran\/} en haut, bas}
+\cm{f$c$ F$c$}{caract\`ere $c$ suivant, pr\'ec\'edent}
+\cm{t$c$ T$c$}{avant le caract\`ere $c$ suivant, pr\'ec\'edent}
+\cm{; ,}{r\'ep\`ete le dernier {\tt fFtT} en sens oppos\'e}
+\cm{[[ ]]}{d\'ebut de section en arri\`ere, avant}
+\cm{[] ][}{fin de section en arri\`ere, avant}
+\cm{[( ])}{(, ) en arri\`ere, avant}
+\cm{[\lapos\ ]\rapos}{{\tt\lapos}, {\tt\rapos} en arri\`ere, avant}
+\cm{[m ]m}{d\'ebut de m\'ethode {\it Java\/} en arri\`ere, avant}
+\cm{[\# ]\#}{{\tt\#if}, {\tt\#else}, {\tt\#endif} en arri\`ere, avant}
+\cm{[* ]*}{d\'ebut, fin de bloc {\tt/* */} en arri\`ere, avant}
+
+\sect{Recherche \& substitution}
+\cm{/$s$\enter\ ?$s$\enter}{cherche $s$ en avant, arri\`ere}
+\cm{/$s$/$o$\enter\ ?$s$?$o$\enter}{idem, avec un d\'ecalage $o$}
+\cm{n\or /\enter}{r\'ep\`ete en avant la derni\`ere recherche}
+\cm{N\or ?\enter}{r\'ep\`ete en arri\`ere la derni\`ere recherche}
+\cm{\# *}{recherche en arri\`ere, avant le mot sous le curseur}
+\cm{g\# g*}{idem, avec les correspondances partielles}
+\cm{gd gD}{d\'efinition locale, globale du mot sous le curseur}
+\cm{:$r$s/$f$/$t$/$x$\enter}{substitue $f$ par $t$ dans l'intervalle $r$}
+\cn{$x:$ {\tt g}---toutes les occurrences, {\tt c}---confirme}
+\cm{:$r$s $x$\enter}{r\'ep\`ete la subst. avec de nouveaux $r$ \& $x$}
+
+\vskip1cm
+\sect{Caract\`eres sp\'eciaux de recherche}
+\cm{.\thinspace\thinspace\thinspace\ctrl\ \$}{tout caract\`ere unique, d\'ebut, fin de ligne}
+\cm{\bs$<$ \bs$>$}{d\'ebut, fin de mot}
+\cm{[$c_1$-$c_2$]}{un caract\`ere unique dans l'intervalle $c_1..c_2$}
+\cm{[\ctrl$c_1$-$c_2$]}{un caract\`ere unique hors intervalle}
+\cm{\bs i \bs f \bs I \bs F}{un identificateur, mot-cl\'e~; sans chiffres}
+\cm{\bs f \bs p \bs F \bs P}{un fichier, car. imprim.~; sans chiffres}
+\cm{\bs s \bs S}{un espace simple, autre espacement}
+\cm{\bs e \bs t \bs r \bs b}{\key{esc}, \key{tab}, \key{\enter}, \key{$\gets$}}
+\cm{\bs = * \bs +}{$0..1$, $0..\infty$, $1..\infty$ des atomes pr\'ec\'edents}
+\cm{\bs$|$}{s\'epare deux branches ($\equiv$ {\it ou})}
+\cm{\bs( \bs)}{groupe plusieurs \'el\'ements dans un atome}
+\cm{\bs \& \bs $n$}{le motif entier, $n^{ieme}$ groupe {\tt()}}
+\cm{\bs u \bs l}{le caract\`ere suivant en majuscule, minuscule}
+\cm{\bs c \bs C}{ignore, respecte la casse}
+
+\sect{D\'ecalage de recherche}
+\cm{$n$\or +$n$}{$n$ lignes en avant en colonne 1}
+\cm{-$n$}{$n$ lignes en arri\`ere en colonne 1}
+\cm{e+$n$ e-$n$}{$n$ caract\`eres \`a droite, gauche de la fin}
+\cm{s+$n$ s-$n$}{$n$ caract\`eres \`a droite, gauche du d\'ebut}
+\cm{;$sc$}{ex\'ecute la recherche $sc$ suivante}
+
+\sect{Marques et d\'eplacement}
+\cm{m$c$}{marque la position courante avec $c\in[a..Z]$}
+\cm{`$c$ `$C$}{va \`a la marque $c$, $C$ dans n'importe quel fichier}
+\cm{`$0..9$}{va \`a la derni\`ere position en sortie}
+\cm{`\/`  `\/"}{va \`a la position avant le saut, derni\`ere \'edition}
+\cm{`[ `]}{va au d\'ebut, fin du texte pr\'ec. manipul\'e}
+\cm{:marks\enter}{affiche la liste des marques actives}
+\cm{:jumps\enter}{affiche la liste des sauts}
+\cm{$n$\ctrl O}{va au $n^{ieme}$ dernier saut dans la liste}
+\cm{$n$\ctrl I}{va au $n^{ieme}$ premier saut dans la liste}
+
+\sect{Allocation de touches \& abbr\'eviation}
+\cm{:map $c$ $e$\enter}{alloue $c\mapsto e$ en mode normal \& visuel}
+\cm{:map!\ $c$ $e$\enter}{alloue $c\mapsto e$ en mode insertion \& cmd.}
+\cm{:unmap $c$\enter\ :unmap!\ $c$\enter}{supprime l'alloc. pour $c$}
+\cm{:mk $f$\enter}{sauvegarde les param\`etres dans le fichier $f$}
+\cm{:ab $c$ $e$\enter}{ajoute l'abbr\'eviation pour $c\mapsto e$}
+\cm{:ab $c$\enter}{liste les abbr\'eviations commen\c cant par $c$}
+\cm{:una $c$\enter}{supprime l'abbr\'eviation pour $c$}
+
+\sect{\'Etiquettes}
+\cm{:ta $t$\enter}{va \`a l'\'etiquette $t$}
+\cm{:$n$ta\enter}{va \`a la $n^{ieme}$ nouvelle \'etiquette}
+\cm{\ctrl ] \ctrl T}{va \`a l'\'etiquette sous le curseur, revient}
+\cm{:ts $t$\enter}{liste les \'etiquettes pour s\'election}
+\cm{:tj $t$\enter}{va \`a l'\'etiquette ou s\'electionne si plusieurs}
+\cm{:tags\enter}{affiche la liste des \'etiquettes}
+\cm{:$n$po\enter\ :$n$\ctrl T\enter}{revient de, va \`a la $n^{ieme}$ derni\`ere}
+% \cm{:$n$po\enter}{jump back from $n^{th}$ older tag in tag list}
+\cm{:tl\enter}{va \`a la derni\`ere \'etiquette utilis\'ee}
+\cm{\ctrl W\rapos\ :pt $t$\enter}{pr\'evisualise l'\'etiquette sous le curseur, $t$}
+\cm{\ctrl W]}{s\'epare la fen\^etre et montre l'\'etiq. sous le curseur}
+\cm{\ctrl Wz\or :pc\enter}{ferme la fen\^etre de pr\'evisualisation}
+
+\sect{D\'efilement \& multi-fen\^etrage}
+\cm{\ctrl E \ctrl Y}{d\'efile une ligne en haut, bas}
+\cm{\ctrl D \ctrl U}{d\'efile une demi-page en haut, bas}
+\cm{\ctrl F \ctrl B}{d\'efile une page en haut, bas}
+\cm{zt\or z\enter}{place la ligne courante en haut de la fen\^etre}
+\cm{zz\or z.\ }{place la ligne courante au centre de la fen\^etre}
+\cm{zb\or z-}{place la ligne courante au bas de la fen\^etre}
+\cm{zh zl}{d\'efile un caract\`ere \`a droite, gauche}
+\cm{zH zL}{d\'efile une demi-fen\^etre \`a droite, gauche}
+\cm{\ctrl Ws\or :split\enter}{s\'epare la fen\^etre courante en deux}
+\cm{\ctrl Wn\or :new\enter}{cr\'e\'e une nouvelle fen\^etre vide}
+\cm{\ctrl Wo\or :on\enter}{agrandit la fen\^etre courante}
+\cm{\ctrl Wj \ctrl Wk}{va \`a la fen\^etre au dessous, dessus}
+\cm{\ctrl Ww \ctrl W\ctrl W}{va \`a la fen\^etre au dessous, dessus (enroule)}
+
+\sect{Commandes Ex (\enter)}
+\cm{:e $f$}{\'edite le fichier $f$, sauf si changements}
+\cm{:e!\ $f$}{\'edite le fichier $f$ (par d\'efaut celui en cours)}
+\cm{:wn :wN}{sauve le fichier et \'edite le suivant, pr\'ec\'edent}
+\cm{:n :N}{\'edite le fichier suivant, pr\'ec\'edent dans la liste}
+\cm{:$r$w}{sauvegarde l'intervalle $r$ dans le fichier en cours}
+\cm{:$r$w $f$}{sauvegarde l'intervalle $r$ dans le fichier $f$}
+\cm{:$r$w$>$\kern-3pt$>$$f$}{ajoute l'intervalle $r$ au fichier $f$}
+\cm{:q :q!}{quitte et confirme, quitte sans sauvegarder}
+\cm{:wq\or :x\or ZZ}{sauvegarde et quitte}
+\cm{\key{up} \key{down}}{rappele les cmd. comme celle en cours}
+\cm{:r $f$}{ins\`ere le fichier $f$ sous le curseur}
+\cm{:r!\ $c$}{ins\`ere le r\'esultat de la cmd. $c$ sous le curseur}
+\cm{:args}{affiche la liste des arguments}
+\cm{:$r$c\ $a$ $r$m\ $a$}{copie, d\'eplace l'interv. $r$ apr\`es la ligne $a$}
+
+\sect{Intervalles Ex}
+\cm{, ;\ }{s\'epare deux lignes, la premi\`ere ligne}
+\cm{$n$}{un num\'ero de ligne absolu $n$}
+\cm{.\thinspace\thinspace\thinspace\$}{la ligne courante, la derni\`ere ligne}
+\cm{\% *}{le fichier entier, la s\'election visuelle}
+\cm{'$t$}{la position de la marque $t$}
+\cm{/$p$/ ?$p$?}{la ligne suivante, pr\'ec\'edente o\`u $p$ correspond}
+\cm{+$n$ -$n$}{$+n$, $-n$ au num\'ero de ligne pr\'ec\'edent}
+
+\sect{Pliage}
+\cm{zf$m$}{cr\'e\'e un pli avec le mouvement $m$}
+\cm{:$r$fo}{cr\'e\'e un pli sur l'intervalle $r$}
+\cm{zd zE}{supprime le pli sous le curseur, tous}
+\cm{zo zc zO zC}{ouvre, ferme un pli, r\'ecursivement}
+\cm{[z ]z}{d\'ebut, fin du pli ouvert en cours}
+\cm{zj zk}{d\'ebut, fin du pli suivant, pr\'ec\'edent}
+
+\sect{Divers}
+\cm{:sh\enter\ :!$c$\enter}{lance un shell, ex\'ecute $c$ dans un shell}
+\cm{K}{affiche l'aide {\tt man} du mot-cl\'e sous le curseur}
+\cm{:make\enter}{lance {\tt make}, lit les erreurs et va \`a la 1\`ere}
+\cm{:cn\enter\ :cp\enter}{affiche l'erreur suivante, pr\'ec\'edente}
+\cm{:cl\enter\ :cf\enter}{liste les erreurs, depuis un fichier}
+\cm{\ctrl L \ctrl G}{r\'e-affiche l'\'ecran, nom de fichier et position}
+\cm{g\ctrl G}{montre la position d\'etaill\'ee du curseur}
+\cm{ga}{montre la valeur A{\smallrm SCII} du caract\`ere}
+\cm{gf}{ouvre le fichier sous le curseur}
+\cm{:redir$>$$f$\enter}{redirige la sortie dans le fichier $f$}
+\cm{:mkview $[f]$}{sauve la config. [dans le fichier $f$]}
+\cm{:loadview $[f]$}{charge la config. [depuis le fichier $f$]}
+\cm{\ctrl @ \ctrl K \ctrl \_\ \bs\ F$n$ \ctrl F$n$}{touches inusit\'ees} 
+
+% Footer
+\vfill \hrule\smallskip
+{\smallrm Cette carte peut-\^etre distribu\'ee librement et
+gratuitement sous le terme de la licence publique g\'en\'erale GNU ---
+Copyright \copyright\ {\oldstyle 2003} by Laurent Gr\'egoire
+$\langle${\smalltt laurent.gregoire@gmail.com}$\rangle$ --- v1.6\par
+L'auteur n'assume aucune responsabilit\'ee concernant cette carte.
+Sur la toile~: {\smalltt http://tnerual.eriogerg.free.fr/}}
+
+\def\translator{Laurent Gr\'egoire}
+
+% Ending
+\supereject
+\if L\lr \else\null\vfill\eject\fi
+\if L\lr \else\null\vfill\eject\fi
+\bye
+
+% EOF
