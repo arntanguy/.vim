@@ -10,16 +10,17 @@ GPL v2 or later (at your option)
 	1. Contents.................................: |arnaud-contents|
 	2. Key-mappings.............................: |a-keys|
     3. Plugins..................................: |a-plugins|
-	     OmniCppComplete........................: |a-omnicppcomplete|
-	     Project................................: |a-project|
-	     SearchInRuntime........................: |a-searchinruntime|
-	     Surround...............................: |a-surround|
-	     Alternate..............................: |a-alternate|
-         ManPageView............................: |a-manpageview|
-         Matchit................................: |a-matchit|
-         NERD_Commenter.........................: |a-nerdcommenter|
-         PhpDocumentor..........................: |a-phpdocumentor|
-         DoxygenToolkit.........................: |a-doxygen|
+            OmniCppComplete........................: |a-omnicppcomplete|
+            Project................................: |a-project|
+            SearchInRuntime........................: |a-searchinruntime|
+            Surround...............................: |a-surround|
+            Alternate..............................: |a-alternate|
+            ManPageView............................: |a-manpageview|
+            Matchit................................: |a-matchit|
+            NERD_Commenter.........................: |a-nerdcommenter|
+            PhpDocumentor..........................: |a-phpdocumentor|
+            DoxygenToolkit.........................: |a-doxygen|
+            Vjde...................................: |a-vjde|
 
 ==============================================================================
 2. Key mappings                         *a-key* *a-keys* {{{1
@@ -144,3 +145,11 @@ GPL v2 or later (at your option)
     Move on a function declaration, and :Dox or <C-P>
     See http://www.vim.org/scripts/script.php?script_id=987 for more details
     and configuration variables
+
+
+    VJDE                                                 *a-vjde* {{{2
+    This is a development environment for java (and also C/C++)
+    - Code completition: <C-x><C-u>
+      Example: System.out.<C-x><C-u> will show the list of functions of
+      System.out.
+    - TODO: describe other functions (I don't know them for now).
