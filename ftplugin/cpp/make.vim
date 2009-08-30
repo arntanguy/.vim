@@ -277,13 +277,8 @@ function s:Make()
     execute winnum . "wincmd w"
 endfunction
 
-if (!exists(":MakeIncludes"))
-    com! -nargs=0 MakeIncludes   call s:MakeIncludes()
-endif
-if (!exists(":Make"))
-    com! -nargs=0 Make  call s:Make()
-else
-    com! -nargs=0 MyMake  call s:Make()
-endif
+
+com! -nargs=0 Mi   call s:MakeIncludes()
+com! -nargs=0 Mm  call s:Make()
 
 let &cpo=s:cpo_save
