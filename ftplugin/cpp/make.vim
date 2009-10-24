@@ -266,8 +266,17 @@ endf
 " Args     :
 " Returns  :
 " Author   : TANGUY Arnaud
-function s:Make()
+function s:Make(dir)
+    echomsg "dir: ".a:dir
+    " Save the old directory, and go to the new one
+    let olddir=expand("%:p:h") 
+    echomsg "olddir: ".olddir
+    if(a:dir  != "")
+        execute ":lcd ".a:dir
+        echomsg "cd :".a:dir
+    endif
     silent! exe &makeprg
+    execute ":lcd ".olddir
     let winnum =winnr() " get current window number
     " g:quickfix_size lines big for the quickfix window
     exe "cope ".g:quickfix_size
@@ -280,5 +289,7 @@ endfunction
 
 com! -nargs=0 Mi   call s:MakeIncludes()
 com! -nargs=0 Mm  call s:Make()
+" Make in an other directory
+com! -nargs=1 Mmd  call s:Make(<args>)
 
 let &cpo=s:cpo_save

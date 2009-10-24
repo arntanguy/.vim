@@ -1,9 +1,23 @@
 " Configuration file for tex
 "
 
+"let g:Imap_FreezeImap=0
+
+function! g:Switch_Imap_FreezeImap() 
+   if g:Imap_FreezeImap == 1
+     let g:Imap_FreezeImap = 0
+   else
+     let g:Imap_FreezeImap = 1
+   endif 
+endfunction
+inoremap <c-i> <esc>:call g:Switch_Imap_FreezeImap()<cr>a
+
 " this is mostly a matter of taste. but LaTeX looks good with just a bit
 " of indentation.
 set sw=2
+set tabstop=2
+filetype indent on
+
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press <C-n> you will automatically cycle through
 " all the figure labels. Very useful!
@@ -34,6 +48,7 @@ imap <buffer> /np \newpage
 
 " Using imaps.vim
 
+call IMAP("/e","é","tex")
 call IMAP ("/em" , "\\emph{<++>} <++>" , "tex")
 
 

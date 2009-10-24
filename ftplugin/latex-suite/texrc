@@ -88,7 +88,7 @@ TexLet g:Tex_DebugLog = ''
 if has('macunix')
 	TexLet g:Tex_DefaultTargetFormat = 'pdf'
 else
-	TexLet g:Tex_DefaultTargetFormat = 'dvi'
+	TexLet g:Tex_DefaultTargetFormat = 'pdf'
 endif
 
 " A comma seperated list of formats which need multiple compilations to be
@@ -143,17 +143,17 @@ if has('win32')
 	TexLet g:Tex_ViewRule_dvi = 'yap -1'
 elseif has('macunix')
 	" Let the system pick.  If you want, you can override the choice here.
-	TexLet g:Tex_ViewRule_ps = ''
-	TexLet g:Tex_ViewRule_pdf = ''
+	TexLet g:Tex_ViewRule_ps = 'evince'
+	TexLet g:Tex_ViewRule_pdf = 'evince'
 	" TexLet g:Tex_ViewRule_pdf = 'Acrobat\ Reader\ 5.1'
-	TexLet g:Tex_ViewRule_dvi = ''
+	TexLet g:Tex_ViewRule_dvi = 'evince'
 	" Set this to 1 to disable opening a viewer with 'open -a'
 	" Note: If you do this, you need to specify viewers above
 	" TexLet g:Tex_TreatMacViewerAsUNIX = 1
 else
-	TexLet g:Tex_ViewRule_ps = 'ghostview'
-	TexLet g:Tex_ViewRule_pdf = 'xpdf'
-	TexLet g:Tex_ViewRule_dvi = 'xdvi'
+	TexLet g:Tex_ViewRule_ps = 'evince'
+	TexLet g:Tex_ViewRule_pdf = 'evince'
+	TexLet g:Tex_ViewRule_dvi = 'evince'
 	" the option below specifies an editor for the dvi viewer while starting
 	" up the dvi viewer according to Dimitri Antoniou's tip on vim.sf.net (tip
 	" #225)
