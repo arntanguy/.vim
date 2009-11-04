@@ -119,13 +119,14 @@ function! s:GetMissingIncludes()
     for i in errors
         if(i["text"] =~ ".* was not declared in this scope")
             " Find the possible name in the error
-            let include = substitute(i["text"], '.*erreur:..\(.*\)..was not declared in this scope', '\1', 'g')
+            "let include = substitute(i["text"], '.*error:..\(.*\)..was not declared in this scope', '\1', 'g')
+            let includes += [substitute(i["text"], '.*error:..\(.*\)..was not declared in this scope', '\1', 'g')]
             " Check if it is really a type, and not a variable name
-            let nextError = errors[l:count + 1]["text"]
-            if(nextError =~ ".* expected .;. before .*")
-                let not_includes += [substitute(nextError, '.* expected .;. before .\(.*\).', '\1', 'g')]
-                let includes += [include]
-            endif
+            "let nextError = errors[l:count + 1]["text"]
+            "if(nextError =~ ".* expected .;. before .*")
+                "let not_includes += [substitute(nextError, '.* expected .;. before .\(.*\).', '\1', 'g')]
+                "let includes += [include]
+            "endif
         elseif(i["text"] =~ ".*variable .* has initializer but incomplete type")
             let includes += [substitute(i["text"], '.*variable .\(.*\) .* has initializer but incomplete type', '\1', 'g')]
         elseif(i["text"] =~ ".* aggregate .* has incomplete type and cannot be defined")
@@ -200,7 +201,7 @@ endfunction
 function! s:SeekPosition()
     exe "normal gg"
     " Seek the existing includes, to add it here if they exists
-    let line = search("#include")
+    let line = search("^#include")
     if line > 0
        return line
     endif
@@ -255,8 +256,9 @@ endfunction
 " Args     : None
 " Returns  : 1 if path1 is equal to path2, 0 otherwise.
 " Author   : TANGUY Arnaud <arn.tanguy@gmail.com>
-function! s:MakeIncludes()
-    exe &makeprg
+function! s:MakeIncludes(dir)
+    "exe &makeprg
+    call s:Make(a:dir)
     let includes = s:GetMissingIncludes()
     call s:AddIncludes(includes)
 endf
@@ -267,13 +269,10 @@ endf
 " Returns  :
 " Author   : TANGUY Arnaud
 function s:Make(dir)
-    echomsg "dir: ".a:dir
     " Save the old directory, and go to the new one
-    let olddir=expand("%:p:h") 
-    echomsg "olddir: ".olddir
+    let olddir=getcwd()
     if(a:dir  != "")
         execute ":lcd ".a:dir
-        echomsg "cd :".a:dir
     endif
     silent! exe &makeprg
     execute ":lcd ".olddir
@@ -287,8 +286,9 @@ function s:Make(dir)
 endfunction
 
 
-com! -nargs=0 Mi   call s:MakeIncludes()
-com! -nargs=0 Mm  call s:Make()
+com! -nargs=0 Mi   call s:MakeIncludes(".")
+com! -nargs=0 Mid   call s:MakeIncludes(<args>)
+com! -nargs=0 Mm  call s:Make(".")
 " Make in an other directory
 com! -nargs=1 Mmd  call s:Make(<args>)
 
