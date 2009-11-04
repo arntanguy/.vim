@@ -67,4 +67,6 @@ call IMAP("\item", "\\item <++>", "tex")
 
 call IMAP("/fig", "\\begin{figure}\<cr>\\centering\\includegraphics[<++>]{<++>}\<cr>\\caption{<++>}\<cr>\\label{<++>}\<cr>\\end{figure}", "tex")
 
+" Fix the é bug
+imap <buffer> <leader>it <Plug>Tex_InsertItemOnThisLine
 

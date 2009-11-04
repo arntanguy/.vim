@@ -2,13 +2,13 @@ let g:author="TANGUY Arnaud"
 let g:email="arn.tanguy@gmail.com"
 let g:licence="GNU GPL v2 or later (at your option)"
 
+
+let g:vjde_window_svr_cmd=0
 " ====== Mappings ===== "
 " 'cd' towards the dir in which is the file edited
 map ,cd :cd %:p:h<CR>
 
 nnoremap <F4> command! -nargs=0 GHPH call <SID>GrabFromHeaderPasteInSource(0,0,3)
-nnoremap <F6> :SearchInVar &path :e<space>./
-nnoremap <F7> :SearchInVar &path :tabe<space>./
 
 set foldmethod=syntax
 set nocompatible
@@ -91,3 +91,15 @@ set completeopt=menuone,menu,longest,preview
 "TagList
 let Tlist_Show_One_File = 1
 
+
+"LAtex
+"
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
