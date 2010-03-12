@@ -3,12 +3,26 @@ let g:email="arn.tanguy@gmail.com"
 let g:licence="GNU GPL v2 or later (at your option)"
 
 
+au BufRead *.ml,*.caml  runtime! ftplugin/ml/make.vim
+
 let g:vjde_window_svr_cmd=0
 " ====== Mappings ===== "
 " 'cd' towards the dir in which is the file edited
 map ,cd :cd %:p:h<CR>
 
 nnoremap <F4> command! -nargs=0 GHPH call <SID>GrabFromHeaderPasteInSource(0,0,3)
+
+""set textwidth=79
+" Trop de caractères
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.*/
+" Espaces finals
+highlight NoSpacesEOL ctermbg=red ctermfg=white guibg=#592929
+match NoSpacesEOL / \+$/
+" Tabulations
+highlight NoTabs ctermbg=red ctermfg=white guibg=#592929
+match NoTabs /\t/
+
 
 set foldmethod=syntax
 set nocompatible
