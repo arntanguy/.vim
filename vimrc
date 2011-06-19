@@ -3,6 +3,7 @@ let g:email="arn.tanguy@gmail.com"
 let g:licence="GNU GPL v2 or later (at your option)"
 
 
+
 au BufRead *.ml,*.caml  runtime! ftplugin/ml/make.vim
 
 let g:vjde_window_svr_cmd=0
@@ -11,6 +12,9 @@ let g:vjde_window_svr_cmd=0
 map ,cd :cd %:p:h<CR>
 
 nnoremap <F4> command! -nargs=0 GHPH call <SID>GrabFromHeaderPasteInSource(0,0,3)
+
+" Arpeggio is a plugin allowing to use simultaneously many keys as a shortcut.
+call arpeggio#map('i', '', 0, 'jk', '<Esc>') " jk in insert mode do the same as esc
 
 ""set textwidth=79
 " Trop de caractères
@@ -44,6 +48,8 @@ set smartcase
 set hlsearch
 set incsearch
 filetype plugin on
+
+set nocp
 
 set history=10000
 
@@ -117,3 +123,4 @@ set grepprg=grep\ -nH\ $*
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+
