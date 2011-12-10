@@ -4,3 +4,4 @@ if [[ ! -d ~/.vim/tags ]]; then
 fi
 ctags -f ~/.vim/tags/qt4 -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include/qt4
 ctags -f ~/.vim/tags/sfml -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include/SFML
+ctags -f ~/.vim/tags/ogre -R --c++-kinds=+p --fields=+iaS --extra=+q /usr/include/OGRE
