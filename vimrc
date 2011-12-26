@@ -88,6 +88,7 @@ nmap <F1> :Project<cr>
 set tags+=~/.vim/tags/qt4
 set tags+=~/.vim/tags/sfml
 set tags+=~/.vim/tags/stl
+set tags+=~/.vim/tags/ogre
 
 " build tags of your own project with CTRL+F12
 "map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
