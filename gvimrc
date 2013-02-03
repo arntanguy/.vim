@@ -1,5 +1,5 @@
 "colorscheme darkspectrum
-colorscheme herald
+colorscheme grape
 " Remove menu bar
 " set guioptions-=m
 "

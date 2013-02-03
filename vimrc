@@ -16,7 +16,7 @@ nnoremap <F4> command! -nargs=0 GHPH call <SID>GrabFromHeaderPasteInSource(0,0,3
 " Arpeggio is a plugin allowing to use simultaneously many keys as a shortcut.
 call arpeggio#map('i', '', 0, 'jk', '<Esc>') " jk in insert mode do the same as esc
 
-""set textwidth=79
+set textwidth=79
 " Trop de caractères
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 match OverLength /\%81v.*/
@@ -64,7 +64,7 @@ set expandtab
 set smartindent
 
 " Colors are more visible on dark background with this option.
-set background=dark
+" set background=dark
 
 " smarter J
 set nojoinspaces
@@ -79,19 +79,22 @@ set statusline=%{VimBuddy()}\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " ===== PLUGINS CONFIG =====
 
 " ** Plugin Project
-nmap <F1> :Project<cr>
+" nmap <F1> :Project<cr>
 " Quick help:
 " - \c  : create a project
 " - <space> : extend the project window, or reduce it
 "
 
-set tags+=~/.vim/tags/qt4
+"set tags+=~/.vim/tags/qt4
 set tags+=~/.vim/tags/sfml
-set tags+=~/.vim/tags/stl
-set tags+=~/.vim/tags/ogre
+set tags+=~/.vim/tags/opencv
+set tags+=~/.vim/tags/PHEngine
+set tags+=~/.vim/tags/CGEngine
+set tags+=~/.vim/tags/opengl
+"set tags+=~/.vim/tags/stl
+"set tags+=~/.vim/tags/ogre
 
-" build tags of your own project with CTRL+F12
-"map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" build tags of your own project with F2 in insert and normal mode
 noremap <F2> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 inoremap <F2> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
 

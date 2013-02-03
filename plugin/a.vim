@@ -71,8 +71,8 @@ endfunction
 
 " Add all the default extensions
 " Mappings for C and C++
-call <SID>AddAlternateExtensionMapping('h',"c,cpp,cxx,cc,CC")
-call <SID>AddAlternateExtensionMapping('H',"C,CPP,CXX,CC")
+call <SID>AddAlternateExtensionMapping('h',"cpp,cxx,c,cc,CC")
+call <SID>AddAlternateExtensionMapping('H',"CPP,CXX,C,CC")
 call <SID>AddAlternateExtensionMapping('hpp',"cpp,c")
 call <SID>AddAlternateExtensionMapping('HPP',"CPP,C")
 call <SID>AddAlternateExtensionMapping('c',"h")
@@ -103,6 +103,9 @@ call <SID>AddAlternateExtensionMapping('mli',"ml")
 call <SID>AddAlternateExtensionMapping('aspx.cs', 'aspx')
 call <SID>AddAlternateExtensionMapping('aspx.vb', 'aspx')
 call <SID>AddAlternateExtensionMapping('aspx', 'aspx.cs,aspx.vb')
+" Vertex/Fragment Shaders
+call <SID>AddAlternateExtensionMapping('vertex.glsl', 'fragment.glsl')
+call <SID>AddAlternateExtensionMapping('fragment.glsl', 'vertex.glsl')
 
 " Setup default search path, unless the user has specified
 " a path in their [._]vimrc. 
