@@ -20,6 +20,7 @@ GPL v2 or later (at your option)
          NERD_Commenter.........................: |a-nerdcommenter|
          PhpDocumentor..........................: |a-phpdocumentor|
          DoxygenToolkit.........................: |a-doxygen|
+         Markdown...............................: |a-markdown|
 
 ==============================================================================
 2. Key mappings                         *a-key* *a-keys* {{{1
@@ -144,3 +145,13 @@ GPL v2 or later (at your option)
     Move on a function declaration, and :Dox or <C-P>
     See http://www.vim.org/scripts/script.php?script_id=987 for more details
     and configuration variables
+
+    MARKDOWN                                     *a-markdown* {{{2
+    Mappings:
+    the following work on normal and visual modes:
+    - ]]: go to next header
+    - [[: go to previous header
+    - ][: go to next sibling header if any
+    - []: go to previous sibling header if any
+    - ]c: go to Current header
+    - ]u: go to parent header (Up)

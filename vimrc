@@ -3,8 +3,27 @@ let g:email="arn.tanguy@gmail.com"
 let g:licence="GNU GPL v2 or later (at your option)"
 
 
+call pathogen#infect() 
+
+
 
 au BufRead *.ml,*.caml  runtime! ftplugin/ml/make.vim
+" GLSL
+au BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl 
+
+" OpenCL 
+au BufNewFile,BufRead *.cl setf opencl 
+
+
+" ========== VIM MARKDOWN ===============
+" Disable folding
+let g:vim_markdown_folding_disabled=1
+" Set initial foldlevel. (default is 0: all closed)
+let g:vim_markdown_initial_foldlevel=1
+
+
+
+
 
 let g:vjde_window_svr_cmd=0
 " ====== Mappings ===== "
@@ -127,4 +146,7 @@ set grepprg=grep\ -nH\ $*
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
-
+" Update time for latexlivepreview plugin
+autocmd Filetype tex setl updatetime=100
+let g:livepreview_previewer = 'evince'
+nmap <F12> :LLPStartPreview<cr>
