@@ -1,5 +1,5 @@
 "colorscheme kolor
-colorscheme molokai
+colorscheme harlequin
 
 " Remove menu bar
 " set guioptions-=m

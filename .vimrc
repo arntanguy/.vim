@@ -9,7 +9,8 @@ set shell=/bin/bash
 " multicore make
 "let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') 
 let &makeprg = 'make -j4'
-let mapleader=";"
+let mapleader=","
+let maplocalleader=","
 
 " Disable mouse support
 "set mouse=
@@ -29,8 +30,8 @@ call vundle#rc()
 " required! 
 Bundle 'gmarik/vundle'
 
-" original repos on GitHub
 Bundle 'Valloric/YouCompleteMe'
+"
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
 " with Ctrl-O (Ctrl-I to jump forward)
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
@@ -48,8 +49,25 @@ set completeopt=menu,menuone
 " Limit popup menu height
 set pumheight=20
 
+"
+" Snippets
+Bundle 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Bundle 'geenux/vim-snippets'
+
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
 let g:formatprg_cpp = "/usr/bin/astyle"
 let g:formatprg_args_cpp = "--options=/home/arnaud/.vim/astyle_options"
+let g:formatprg_ino = "/usr/bin/astyle"
+let g:formatprg_args_ino = "--options=/home/arnaud/.vim/astyle_options"
 Bundle "Chiel92/vim-autoformat"
 noremap <F3> :Autoformat<CR><CR>
 " Indent on save hook
@@ -81,22 +99,10 @@ noremap <F12> :cclose<CR>
 Bundle 'vim-pandoc'
 " Bundle 'petRUShka/vim-opencl'
 
-" Snippets
-Bundle 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Bundle 'geenux/vim-snippets'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
 Bundle 'a.vim'
 Bundle 'surround.vim'
 Bundle 'DoxygenToolkit.vim'
+Bundle 'tmhedberg/matchit'
 
 " For google prototxt
 Bundle 'protodef'
@@ -112,11 +118,15 @@ set t_Co=256
 let g:Powerline_symbols = 'fancy'
 
 " Molokai theme
-Bundle 'molokai'
+" Bundle 'molokai'
+Bundle 'nielsmadan/harlequin'
+
+
 
 " Structure of file, jump to function...
 " Open with :TlistOpen
 Bundle 'taglist.vim'
+
 
 " CtrlP: easy opening of files
 Bundle 'kien/ctrlp.vim'
@@ -144,13 +154,34 @@ function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
   return split(system(cmd), "\n")
 endfunction
 
+
+"" ROS
+Bundle 'taketwo/vim-ros'
+
+
+
+"" ARDUINO
+" <leader>ac  - compile
+" <leader>ad  - deploy
+" <leader>as  - deplay and show serial debug (ino serial)
+Bundle 'jplaut/vim-arduino-ino'
+Bundle 'sudar/vim-arduino-syntax'
+
+
+" Reference completion using ycm
+" Only considers bib files in the same directory
+"Bundle 'bjoernd/vim-ycm-tex'
+"let g:ycm_semantic_triggers = {
+"\  'tex'  : ['\ref{','\cite{'],
+"\ }
+
 syntax on
 " Clear syntax highlighting on Esc
 nnoremap <silent> <esc> :noh<cr><esc>
 
 
 if has('gui_running')
-  set guifont=Inconsolata\ Medium\ 11
+  set guifont=Inconsolata\ Medium\ 12
 endif
 
 
@@ -221,7 +252,29 @@ function! MatRunCellAdvanced()
    "!wmctrl -a MATLAB 
 endfunction
 map ,n :call MatRunCellAdvanced()  <cr><cr>
+" ==============================================================================
+" LaTex
+" ==============================================================================
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+autocmd BufNewFile,BufRead *.tex set ft=tex
+let g:LatexBox_latexmk_async=1
+let g:LatexBox_latexmk_options="-pdf"
+let g:LatexBox_output_type="pdf"
+let g:LatexBox_viewer="evince"
 
+" vim conceal feature for LaTeX
+" Activates it
+" (0: no conceal, 1: replaced with one char, 2 highlighted with conceal group,
+" 3 conceal completely hidden)
+set cole=0
+hi Conceal guibg=black guifg=white
+" Disable superscript concealement
+" a = conceal accents/ligatures
+" d = conceal delimiters
+" g = conceal Greek
+" m = conceal math symbols
+" s = conceal superscripts/subscripts
+let g:tex_conceal="adgm"
 " ================================================================================
 " ======================== FILE TYPE SPECIFIC " ==================================
 " ================================================================================
@@ -248,6 +301,15 @@ let g:ycm_confirm_extra_conf = 0
 " Close preview window when selection has been made
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+""use omnicomplete whenever there's no completion engine in youcompleteme (for
+""example, in the case of PHP)
+"set omnifunc=syntaxcomplete#Complete
+"
+"" Add triggers to ycm for LaTeX-Box autocompletion
+"let g:ycm_semantic_triggers = {
+"\  'tex'  : ['{'],
+"\ }
 
 " ================================================================================
 " ============================== VIM MARKDOWN ====================================
