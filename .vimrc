@@ -123,11 +123,6 @@ Bundle 'nielsmadan/harlequin'
 
 
 
-" Structure of file, jump to function...
-" Open with :TlistOpen
-Bundle 'taglist.vim'
-
-
 " CtrlP: easy opening of files
 Bundle 'kien/ctrlp.vim'
 " Better matcher for ctrlp
@@ -176,9 +171,6 @@ Bundle 'sudar/vim-arduino-syntax'
 "\ }
 
 syntax on
-" Clear syntax highlighting on Esc
-nnoremap <silent> <esc> :noh<cr><esc>
-
 
 if has('gui_running')
   set guifont=Inconsolata\ Medium\ 12
@@ -201,6 +193,9 @@ set number
 
 set enc=utf-8
 set fileencoding=utf-8 
+
+"colorscheme kolor
+colorscheme harlequin
 
 " ================================================================================
 " ================================== Code ========================================
@@ -335,8 +330,3 @@ vnoremap <silent> # :<C-U>
       \gvy?<C-R><C-R>=substitute(
       \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
       \gV:call setreg('"', old_reg, old_regtype)<CR>
-
-
-
-
-
