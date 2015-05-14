@@ -2,36 +2,71 @@
 " =============================== Global Config=================================== 
 " ================================================================================
 set nocompatible              " be iMproved
+filetype plugin indent on     " required!
 filetype off                  " required!
+syntax on
+set enc=utf-8
+set fileencoding=utf-8 
 "set term=xterm
 set shell=/bin/bash
 
 " multicore make
 "let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') 
 let &makeprg = 'make -j4'
-let mapleader=","
-let maplocalleader=","
 
 " Disable mouse support
 "set mouse=
-" ================================================================================
-" =============================== Vundle  ======================================== 
-" ================================================================================
-"
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install (update) bundles
-" :BundleSearch(!) foo - search (or refresh cache first) for foo
-" :BundleClean(!)      - confirm (or auto-approve) removal of unused bundles
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
 
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+" Plug {{{
+" ================================================================================
+" =============================== Vim-plug======================================== 
+" ================================================================================
+set rtp+=~/.vim/plugged
+call plug#begin('~/.vim/plugged')
 
-Bundle 'Valloric/YouCompleteMe'
-"
+
+Plug 'Valloric/YouCompleteMe'
+" Snippets
+Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'geenux/vim-snippets'
+Plug 'Chiel92/vim-autoformat'
+Plug 'benekastah/neomake'
+" Plugin to help manage the pandoc blog
+Plug 'vim-pandoc'
+" Plug 'petRUShka/vim-opencl'
+Plug 'a.vim'
+Plug 'surround.vim'
+Plug 'DoxygenToolkit.vim'
+Plug 'tmhedberg/matchit'
+
+" For google prototxt
+Plug 'protodef'
+" Molokai theme
+" Plug 'molokai'
+Plug 'nielsmadan/harlequin'
+" CtrlP: easy opening of files
+Plug 'kien/ctrlp.vim'
+Plug 'burke/matcher'
+"" ROS
+Plug 'taketwo/vim-ros'
+Plug 'jplaut/vim-arduino-ino'
+Plug 'sudar/vim-arduino-syntax'
+Plug 'geenux/matlab_vim'
+Plug 'LaTeX-Box-Team/LaTeX-Box'
+call plug#end()
+" }}}
+
+
+" Appearance {{{
+if has('gui_running')
+  set guifont=Inconsolata\ Medium\ 12
+endif
+colorscheme harlequin
+" }}}
+
+
+" YCM {{{
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
 " with Ctrl-O (Ctrl-I to jump forward)
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
@@ -49,60 +84,44 @@ set completeopt=menu,menuone
 " Limit popup menu height
 set pumheight=20
 
-"
-" Snippets
-Bundle 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Bundle 'geenux/vim-snippets'
-
-
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+" }}}
 
 
+" Astyle {{{
 let g:formatprg_cpp = "/usr/bin/astyle"
 let g:formatprg_args_cpp = "--options=/home/arnaud/.vim/astyle_options"
 let g:formatprg_ino = "/usr/bin/astyle"
 let g:formatprg_args_ino = "--options=/home/arnaud/.vim/astyle_options"
-Bundle "Chiel92/vim-autoformat"
 noremap <F3> :Autoformat<CR><CR>
-" Indent on save hook
-"autocmd BufWritePre <buffer> Autoformat
+" }}}
 
+
+" Neomake {{{
 """"""""""""""""""""""""""""""""""""""""""""
 " Asynchronous make using neovim features
 " (works in vim without asynchronous features)
 """""""""""""""""""""""""""""""""""""""""""
-Bundle 'benekastah/neomake'
 let g:neomake_open_list=1
 let g:neomake_list_height=10
 noremap <F10> :Neomake! <CR>
 noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
+" }}}
 
-" Plugin to help manage the pandoc blog
-Bundle 'vim-pandoc'
-" Bundle 'petRUShka/vim-opencl'
 
-Bundle 'a.vim'
-Bundle 'surround.vim'
-Bundle 'DoxygenToolkit.vim'
-Bundle 'tmhedberg/matchit'
-
-" For google prototxt
-Bundle 'protodef'
-
+" Powerline {{{
 """ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-"" Powerline
 "" Not yet compatible with neovim, disable for now
 """ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 "" "Useful status bar
-"" Bundle 'Lokaltog/powerline'
+"" Plug 'Lokaltog/powerline'
 "" set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
 "" "set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 "" " Always show statusline
@@ -110,17 +129,12 @@ Bundle 'protodef'
 "" " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 "" set t_Co=256
 "" let g:Powerline_symbols = 'fancy'
-
-" Molokai theme
-" Bundle 'molokai'
-Bundle 'nielsmadan/harlequin'
-colorscheme harlequin
+" }}}
 
 
-" CtrlP: easy opening of files
-Bundle 'kien/ctrlp.vim'
+
+" Ctrl-P {{{
 " Better matcher for ctrlp
-Bundle 'burke/matcher'
 let g:path_to_matcher = "/usr/local/bin/matcher"
 let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
 let g:ctrlp_match_func = { 'match': 'GoodMatch' }
@@ -142,37 +156,19 @@ function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
   let cmd = cmd.a:str
   return split(system(cmd), "\n")
 endfunction
+" }}}
 
 
-"" ROS
-Bundle 'taketwo/vim-ros'
-
-
-
-"" ARDUINO
+"" ARDUINO {{{
 " <leader>ac  - compile
 " <leader>ad  - deploy
 " <leader>as  - deplay and show serial debug (ino serial)
-Bundle 'jplaut/vim-arduino-ino'
-Bundle 'sudar/vim-arduino-syntax'
+" }}}
 
-
-" Reference completion using ycm
-" Only considers bib files in the same directory
-"Bundle 'bjoernd/vim-ycm-tex'
-"let g:ycm_semantic_triggers = {
-"\  'tex'  : ['\ref{','\cite{'],
-"\ }
-
-syntax on
-
-if has('gui_running')
-  set guifont=Inconsolata\ Medium\ 12
-endif
-
-
+" Custom Mappings {{{
 " 'cd' towards the dir in which is the file edited
 map <leader>cd :cd %:p:h<CR>
+" }}}
 
 " write file automatically (for :make, :next, Ctrl-]....)
 set autowriteall
@@ -185,14 +181,8 @@ set nojoinspaces
 set number
 "hi CursorLine guibg=#e7ebff
 
-set enc=utf-8
-set fileencoding=utf-8 
 
-" ================================================================================
-" ================================== Code ========================================
-" ================================================================================
-filetype plugin indent on     " required!
-
+" Code {{{
 " Folding
 set foldmethod=syntax
 " All folds open by default
@@ -204,28 +194,13 @@ set tabstop=2
 " Spaces instead of tabs
 set expandtab
 set smartindent
-
-"Case sensitive search only if an upper case character is included in the
-"search pattern :)
-set smartcase
-set hlsearch
-set incsearch
+" }}}
 
 " Completion in command line
 set wildmenu
 set wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz
 
-" build tags of your own project with F2 in insert and normal mode
-noremap <F2> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-inoremap <F2> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<cr>
-noremap <F9> :make! -j8<cr>
-inoremap <F9> :make! -j8<cr>
-
-
-" ================================================================================ 
-" MATLAB
-" ================================================================================  
-Bundle "geenux/matlab_vim"
+" Matlab {{{
 source $VIMRUNTIME/macros/matchit.vim
 
 function! MatRunCellAdvanced()
@@ -238,10 +213,10 @@ function! MatRunCellAdvanced()
    "!wmctrl -a MATLAB 
 endfunction
 map ,n :call MatRunCellAdvanced()  <cr><cr>
-" ==============================================================================
-" LaTex
-" ==============================================================================
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
+" }}}
+
+
+" Latex {{{
 autocmd BufNewFile,BufRead *.tex set ft=tex
 let g:LatexBox_latexmk_async=1
 let g:LatexBox_latexmk_options="-pdf"
@@ -261,20 +236,19 @@ hi Conceal guibg=black guifg=white
 " m = conceal math symbols
 " s = conceal superscripts/subscripts
 let g:tex_conceal="adgm"
-" ================================================================================
-" ======================== FILE TYPE SPECIFIC " ==================================
-" ================================================================================
+" }}}
 
+
+" File type specific {{{
 " GLSL
 "autocmd BufNewFile,BufRead *.frag,*.vert,*.geom,*gp,*.fp,*.vp,*.glsl setf glsl
 
 " Opencl
 autocmd BufNewFile,BufRead *.cl set filetype=opencl
+" }}}
 
 
-" ==============================================================================
-" ============================= YouCompleteMe (YCM) ============================
-" ==============================================================================
+" YouCompleteMe (YCM) {{{
 " Read doc for installation and configuration. 
 " Short version:
 " - Build with cmake -D CMAKE_EXPORT_COMPILE_COMMANDS="YES"
@@ -287,28 +261,24 @@ let g:ycm_confirm_extra_conf = 0
 " Close preview window when selection has been made
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" }}}
 
-""use omnicomplete whenever there's no completion engine in youcompleteme (for
-""example, in the case of PHP)
-"set omnifunc=syntaxcomplete#Complete
-"
-"" Add triggers to ycm for LaTeX-Box autocompletion
-"let g:ycm_semantic_triggers = {
-"\  'tex'  : ['{'],
-"\ }
 
-" ================================================================================
-" ============================== VIM MARKDOWN ====================================
-" ================================================================================
+" Markdown {{{
 " Disable folding
 let g:vim_markdown_folding_disabled=1
 " Set initial foldlevel. (default is 0: all closed)
 let g:vim_markdown_initial_foldlevel=1
+" }}}
 
 
 
-
-
+" Search {{{
+"Case sensitive search only if an upper case character is included in the
+"search pattern :)
+set smartcase
+set hlsearch
+set incsearch
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
@@ -321,3 +291,5 @@ vnoremap <silent> # :<C-U>
       \gvy?<C-R><C-R>=substitute(
       \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
       \gV:call setreg('"', old_reg, old_regtype)<CR>
+" }}}
+
