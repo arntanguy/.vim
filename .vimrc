@@ -73,26 +73,15 @@ noremap <F3> :Autoformat<CR><CR>
 " Indent on save hook
 "autocmd BufWritePre <buffer> Autoformat
 
-" To run commands in the background
-" Run :Make for foregournd build
-" Run :Make! for background build
-" Use :Copen to open the quickfix window (whether build is still running
-" or not
-" Use :Start instead of :! to run external commands
-Bundle "tpope/vim-dispatch"
-noremap <F10> :Make!<CR><CR>
-" Toggle quickfix window
-command -bang -nargs=? QFix call QFixToggle(<bang>0)
-function! QFixToggle(forced)
-  if exists("g:qfix_win") && a:forced == 0
-    cclose
-    unlet g:qfix_win
-  else
-    :Copen
-    let g:qfix_win = bufnr("$")
-  endif
-endfunction
-noremap <F11> :Copen<CR>
+""""""""""""""""""""""""""""""""""""""""""""
+" Asynchronous make using neovim features
+" (works in vim without asynchronous features)
+"""""""""""""""""""""""""""""""""""""""""""
+Bundle 'benekastah/neomake'
+let g:neomake_open_list=1
+let g:neomake_list_height=10
+noremap <F10> :Neomake! <CR>
+noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
 
 " Plugin to help manage the pandoc blog
@@ -107,20 +96,25 @@ Bundle 'tmhedberg/matchit'
 " For google prototxt
 Bundle 'protodef'
 
-"Useful status bar
-Bundle 'Lokaltog/powerline'
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-"set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
-" Always show statusline
-set laststatus=2
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-let g:Powerline_symbols = 'fancy'
+""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+"" Powerline
+"" Not yet compatible with neovim, disable for now
+""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+"" "Useful status bar
+"" Bundle 'Lokaltog/powerline'
+"" set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"" "set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
+"" " Always show statusline
+"" set laststatus=2
+"" " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+"" set t_Co=256
+"" let g:Powerline_symbols = 'fancy'
 
 " Molokai theme
 " Bundle 'molokai'
 Bundle 'nielsmadan/harlequin'
-
+colorscheme harlequin
 
 
 " CtrlP: easy opening of files
@@ -193,9 +187,6 @@ set number
 
 set enc=utf-8
 set fileencoding=utf-8 
-
-"colorscheme kolor
-colorscheme harlequin
 
 " ================================================================================
 " ================================== Code ========================================
