@@ -8,7 +8,7 @@ Start vim, and run
 Then, go to ~/.vim/bundle and do the following
 
 - YouCompleteMe : General/C++ completion tool. You will have to compile it, run
-    ./install.sh
+    ./install.sh --clang-completer
 
 - Powerline: nice status bar
     ./setup build
