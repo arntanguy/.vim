@@ -54,6 +54,9 @@ Plug 'jplaut/vim-arduino-ino'
 Plug 'sudar/vim-arduino-syntax'
 Plug 'geenux/matlab_vim'
 Plug 'LaTeX-Box-Team/LaTeX-Box'
+" Seamless navigation between tmux
+" and vim with C-[h|j|k|l]
+Plug 'christoomey/vim-tmux-navigator'
 call plug#end()
 " }}}
 
