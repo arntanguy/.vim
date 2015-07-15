@@ -1,18 +1,27 @@
 " ================================================================================
-" =============================== Global Config=================================== 
+" =============================== Global Config===================================
 " ================================================================================
 set nocompatible              " be iMproved
 filetype plugin indent on     " required!
 filetype off                  " required!
 syntax on
 set enc=utf-8
-set fileencoding=utf-8 
+" Always display status bar
+set laststatus=2
+set fileencoding=utf-8
 "set term=xterm
 set shell=/bin/bash
 
 " multicore make
-"let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') 
-let &makeprg = 'make -j4'
+"let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') let &makeprg = 'make -j4'
+
+let mapleader = ","
+
+if has("nvim")
+    tnoremap <Esc> <C-\><C-n>
+endif
+" remaps annoying ex mode to repeat macro
+nnoremap Q @@
 
 " Disable mouse support
 "set mouse=
@@ -26,19 +35,18 @@ call plug#begin('~/.vim/plugged')
 
 
 Plug 'Valloric/YouCompleteMe'
+Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 " Snippets
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
-Plug 'geenux/vim-snippets'
+Plug 'honza/vim-snippets'
 Plug 'Chiel92/vim-autoformat'
 Plug 'benekastah/neomake'
 " Plugin to help manage the pandoc blog
 Plug 'vim-pandoc'
 " Plug 'petRUShka/vim-opencl'
-Plug 'a.vim'
 Plug 'surround.vim'
 Plug 'DoxygenToolkit.vim'
-Plug 'tmhedberg/matchit'
 
 " For google prototxt
 Plug 'protodef'
@@ -57,9 +65,13 @@ Plug 'LaTeX-Box-Team/LaTeX-Box'
 " Seamless navigation between tmux
 " and vim with C-[h|j|k|l]
 Plug 'christoomey/vim-tmux-navigator'
+
+Plug 'bling/vim-airline'
+Plug 'spiiph/vim-space'
+" comment using gc<command> or gcc (one line or selection)
+Plug 'tpope/vim-commentary'
 call plug#end()
 " }}}
-
 
 " Appearance {{{
 if has('gui_running')
@@ -68,6 +80,37 @@ endif
 colorscheme harlequin
 " }}}
 
+" vim-commentary {{{
+autocmd FileType c,cpp set commentstring=//\ %s
+" }}}
+
+
+" Vim-airline {{{
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+" }}}
+
+" Space.vim {{{
+function! SlSpace()
+    if exists("*GetSpaceMovement")
+        return "[" . GetSpaceMovement() . "]"
+    else
+        return ""
+    endif
+endfunc
+set statusline+=%{SlSpace()}
+" }}}
 
 " YCM {{{
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
@@ -97,10 +140,14 @@ let g:UltiSnipsEditSplit="vertical"
 
 
 " Astyle {{{
-let g:formatprg_cpp = "/usr/bin/astyle"
-let g:formatprg_args_cpp = "--options=/home/arnaud/.vim/astyle_options"
-let g:formatprg_ino = "/usr/bin/astyle"
-let g:formatprg_args_ino = "--options=/home/arnaud/.vim/astyle_options"
+" let g:formatprg_cpp = "/usr/bin/astyle"
+" let g:formatprg_args_cpp = "--options=/home/arnaud/.vim/astyle_options"
+" let g:formatprg_ino = "/usr/bin/astyle"
+" let g:formatprg_args_ino = "--options=/home/arnaud/.vim/astyle_options"
+
+let g:formatdef_clang_google_cpp = '"clang-format -style=google"'
+let g:formatdef_clang_llvm_cpp = '"clang-format -style=LLVM"'
+let g:formatters_cpp = ['clang_google_cpp', 'clang_llvm_cpp']
 noremap <F3> :Autoformat<CR><CR>
 " }}}
 
@@ -207,13 +254,13 @@ set wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz
 source $VIMRUNTIME/macros/matchit.vim
 
 function! MatRunCellAdvanced()
-   execute "!echo \"cd(\'".expand("%:p:h")."\')\">/tmp/buff"  
+   execute "!echo \"cd(\'".expand("%:p:h")."\')\">/tmp/buff"
    :?%%?;/%%/w>> /tmp/buff
    execute "!echo \"edit ".expand("%:f")."\">>/tmp/buff"
    !cat /tmp/buff|xclip -selection c
    !cat /tmp/buff|xclip
    !quickswitch.py -r MATLAB
-   "!wmctrl -a MATLAB 
+   "!wmctrl -a MATLAB
 endfunction
 map ,n :call MatRunCellAdvanced()  <cr><cr>
 " }}}
@@ -252,7 +299,7 @@ autocmd BufNewFile,BufRead *.cl set filetype=opencl
 
 
 " YouCompleteMe (YCM) {{{
-" Read doc for installation and configuration. 
+" Read doc for installation and configuration.
 " Short version:
 " - Build with cmake -D CMAKE_EXPORT_COMPILE_COMMANDS="YES"
 " - Create a .ycm_extra_conf.py configuration file at the root of your
@@ -264,6 +311,13 @@ let g:ycm_confirm_extra_conf = 0
 " Close preview window when selection has been made
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+" The various GoTo* subcommands add entries to Vim's jumplist so you can use CTRL-O to jump back to where you where before invoking the command (and CTRL-I to jump forward; see :h jumplist for details).
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+" disable ycm
+nnoremap <leader>yd :let g:ycm_min_num_of_chars_for_completion=200000000<CR>
+" enable ycm
+nnoremap <leader>ya :let g:ycm_min_num_of_chars_for_completion=2<CR>
 " }}}
 
 
