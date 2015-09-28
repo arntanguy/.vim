@@ -2,6 +2,7 @@
 " =============================== Global Config===================================
 " ================================================================================
 set nocompatible              " be iMproved
+set hidden
 filetype plugin indent on     " required!
 filetype off                  " required!
 syntax on
@@ -13,7 +14,8 @@ set fileencoding=utf-8
 set shell=/bin/bash
 
 " multicore make
-"let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') let &makeprg = 'make -j4'
+let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') 
+" let &makeprg = 'make -j4'
 
 let mapleader = ","
 
@@ -56,12 +58,14 @@ Plug 'nielsmadan/harlequin'
 " CtrlP: easy opening of files
 Plug 'kien/ctrlp.vim'
 Plug 'burke/matcher'
+" Ctrl-Space for efficient use of tabs and layout
+Plug 'szw/vim-ctrlspace'
 "" ROS
 Plug 'taketwo/vim-ros'
 Plug 'jplaut/vim-arduino-ino'
 Plug 'sudar/vim-arduino-syntax'
 Plug 'geenux/matlab_vim'
-Plug 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'lervag/vimtex'
 " Seamless navigation between tmux
 " and vim with C-[h|j|k|l]
 Plug 'christoomey/vim-tmux-navigator'
@@ -70,6 +74,7 @@ Plug 'bling/vim-airline'
 Plug 'spiiph/vim-space'
 " comment using gc<command> or gcc (one line or selection)
 Plug 'tpope/vim-commentary'
+Plug 'mhinz/vim-grepper'
 call plug#end()
 " }}}
 
@@ -84,21 +89,23 @@ colorscheme harlequin
 autocmd FileType c,cpp set commentstring=//\ %s
 " }}}
 
+" Vim-grepper {{{
+"
+" <leader>g in normal mode will prompt for a new search term 
+" <leader>g in visual mode will adopt the current visual selection.
+" <leader>g at the search prompt will switch to the next grep tool.
+" gs is an operator and takes any motion, e.g. gsi( or gsap.
+" Use <up> and <down> for going through the input history or use <c-f> to open it in the cmdwin.
+nmap <leader>g <plug>(Grepper)
+xmap <leader>g <plug>(Grepper)
+cmap <leader>g <plug>(GrepperNext)
+nmap gs        <plug>(GrepperMotion)
+xmap gs        <plug>(GrepperMotion)
+" }}}
 
 " Vim-airline {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
 " }}}
 
 " Space.vim {{{
@@ -130,6 +137,17 @@ set completeopt=menu,menuone
 " Limit popup menu height
 set pumheight=20
 
+" Open preview window for completions
+let g:ycm_add_preview_to_completeopt=1
+let g:ycm_autoclose_preview_window_after_completion=0
+let g:ycm_autoclose_preview_window_after_insertion=1
+
+" For ros Files
+let g:ycm_semantic_triggers = {
+\   'roslaunch' : ['="', '$(', '/'],
+\   'rosmsg,rossrv,rosaction' : ['re!^', '/'],
+\ }
+
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
@@ -159,11 +177,17 @@ noremap <F3> :Autoformat<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""
 let g:neomake_open_list=1
 let g:neomake_list_height=10
-noremap <F10> :Neomake! <CR>
+" always open quickfix taking the whole horizontal space available
+au FileType qf wincmd J
+noremap <F10> :cclose<CR>:Neomake! <CR>
 noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
 " }}}
 
+" vim-ros {{{
+let g:ros_make = 'current'
+let g:ros_catkin_make_options = '-j4'
+" }}}
 
 " Powerline {{{
 """ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -186,7 +210,8 @@ noremap <F12> :cclose<CR>
 " Ctrl-P {{{
 " Better matcher for ctrlp
 let g:path_to_matcher = "/usr/local/bin/matcher"
-let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+"let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+let g:ctrlp_user_command = ['ag -l --nocolor -g ""']
 let g:ctrlp_match_func = { 'match': 'GoodMatch' }
 function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
   " Create a cache file if not yet exists
@@ -206,6 +231,14 @@ function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
   let cmd = cmd.a:str
   return split(system(cmd), "\n")
 endfunction
+" }}}
+
+" Ctrl-Space {{{
+" List files (takes into account .gitignore)
+set showtabline=0
+if executable("ag")
+    let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+endif
 " }}}
 
 
@@ -268,24 +301,6 @@ map ,n :call MatRunCellAdvanced()  <cr><cr>
 
 " Latex {{{
 autocmd BufNewFile,BufRead *.tex set ft=tex
-let g:LatexBox_latexmk_async=1
-let g:LatexBox_latexmk_options="-pdf"
-let g:LatexBox_output_type="pdf"
-let g:LatexBox_viewer="evince"
-
-" vim conceal feature for LaTeX
-" Activates it
-" (0: no conceal, 1: replaced with one char, 2 highlighted with conceal group,
-" 3 conceal completely hidden)
-set cole=0
-hi Conceal guibg=black guifg=white
-" Disable superscript concealement
-" a = conceal accents/ligatures
-" d = conceal delimiters
-" g = conceal Greek
-" m = conceal math symbols
-" s = conceal superscripts/subscripts
-let g:tex_conceal="adgm"
 " }}}
 
 
