@@ -28,54 +28,10 @@ nnoremap Q @@
 " Disable mouse support
 "set mouse=
 
-" Plug {{{
-" ================================================================================
-" =============================== Vim-plug======================================== 
-" ================================================================================
-set rtp+=~/.vim/plugged
-call plug#begin('~/.vim/plugged')
-
-
-Plug 'Valloric/YouCompleteMe'
-Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
-" Snippets
-Plug 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-Plug 'Chiel92/vim-autoformat'
-Plug 'benekastah/neomake'
-" Plugin to help manage the pandoc blog
-Plug 'vim-pandoc'
-" Plug 'petRUShka/vim-opencl'
-Plug 'surround.vim'
-Plug 'DoxygenToolkit.vim'
-
-" For google prototxt
-Plug 'protodef'
-" Molokai theme
-" Plug 'molokai'
-Plug 'nielsmadan/harlequin'
-" CtrlP: easy opening of files
-Plug 'kien/ctrlp.vim'
-Plug 'burke/matcher'
-" Ctrl-Space for efficient use of tabs and layout
-Plug 'szw/vim-ctrlspace'
-"" ROS
-Plug 'taketwo/vim-ros'
-Plug 'jplaut/vim-arduino-ino'
-Plug 'sudar/vim-arduino-syntax'
-Plug 'geenux/matlab_vim'
-Plug 'lervag/vimtex'
-" Seamless navigation between tmux
-" and vim with C-[h|j|k|l]
-Plug 'christoomey/vim-tmux-navigator'
-
-Plug 'bling/vim-airline'
-Plug 'spiiph/vim-space'
-" comment using gc<command> or gcc (one line or selection)
-Plug 'tpope/vim-commentary'
-Plug 'mhinz/vim-grepper'
-call plug#end()
+" Use plugins config {{{
+if filereadable(expand("~/.vimrc.plugins"))
+  source ~/.vimrc.plugins
+endif
 " }}}
 
 " Appearance {{{
