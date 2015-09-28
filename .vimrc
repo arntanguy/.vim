@@ -29,8 +29,8 @@ nnoremap Q @@
 "set mouse=
 
 " Use plugins config {{{
-if filereadable(expand("~/.vimrc.plugins"))
-  source ~/.vimrc.plugins
+if filereadable(expand("~/.nvimrc.plugins"))
+  source ~/.nvimrc.plugins
 endif
 " }}}
 
@@ -115,9 +115,9 @@ let g:UltiSnipsEditSplit="vertical"
 
 " Astyle {{{
 " let g:formatprg_cpp = "/usr/bin/astyle"
-" let g:formatprg_args_cpp = "--options=/home/arnaud/.vim/astyle_options"
+" let g:formatprg_args_cpp = "--options=/home/arnaud/.nvim/astyle_options"
 " let g:formatprg_ino = "/usr/bin/astyle"
-" let g:formatprg_args_ino = "--options=/home/arnaud/.vim/astyle_options"
+" let g:formatprg_args_ino = "--options=/home/arnaud/.nvim/astyle_options"
 
 let g:formatdef_clang_google_cpp = '"clang-format -style=google"'
 let g:formatdef_clang_llvm_cpp = '"clang-format -style=LLVM"'
@@ -152,7 +152,7 @@ let g:ros_catkin_make_options = '-j4'
 
 "" "Useful status bar
 "" Plug 'Lokaltog/powerline'
-"" set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+"" set rtp+=~/.nvim/bundle/powerline/powerline/bindings/vim
 "" "set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 "" " Always show statusline
 "" set laststatus=2

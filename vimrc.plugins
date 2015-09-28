@@ -6,7 +6,7 @@ set nocompatible              " be iMproved
 set hidden
 
 " Start adding Plugs
-silent! if plug#begin('~/.vim/plugged')
+silent! if plug#begin('~/.nvim/plugged')
 
 
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
