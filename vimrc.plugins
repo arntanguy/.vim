@@ -52,6 +52,11 @@ Plug 'mhinz/vim-grepper'
 " EMACS kill-ring emulation
 " Use Meta-p, Meta-shift-p to cycle through yanked elements
 Plug 'maxbrunsfeld/vim-yankstack'
+" Git wrapper
+Plug 'tpope/vim-fugitive'
+" gitk for Vim
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+
 call plug#end()
 endif
 " }}}
