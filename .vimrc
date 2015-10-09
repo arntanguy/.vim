@@ -43,6 +43,7 @@ colorscheme harlequin
 
 " vim-commentary {{{
 autocmd FileType c,cpp set commentstring=//\ %s
+autocmd FileType cmake set commentstring=#\ %s
 " }}}
 
 " Vim-grepper {{{
@@ -120,8 +121,9 @@ let g:UltiSnipsEditSplit="vertical"
 " let g:formatprg_args_ino = "--options=/home/arnaud/.nvim/astyle_options"
 
 let g:formatdef_clang_google_cpp = '"clang-format -style=google"'
-let g:formatdef_clang_llvm_cpp = '"clang-format -style=LLVM"'
-let g:formatters_cpp = ['clang_google_cpp', 'clang_llvm_cpp']
+let g:formatdef_clang_jrl_cpp = '"clang-format -style=''{BasedOnStyle: Google, BreakBeforeBraces: Allman}''"'
+" let g:formatdef_clang_llvm_cpp = '"clang-format -style=LLVM"'
+let g:formatters_cpp = ['clang_google_cpp', 'clang_jrl_cpp']
 noremap <F3> :Autoformat<CR><CR>
 " }}}
 

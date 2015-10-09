@@ -38,6 +38,7 @@ Plug 'taketwo/vim-ros'
 Plug 'jplaut/vim-arduino-ino'
 Plug 'sudar/vim-arduino-syntax'
 Plug 'geenux/matlab_vim'
+Plug 'elmanuelito/vim-matlab-behave'
 Plug 'lervag/vimtex'
 " Seamless navigation between tmux
 " and vim with C-[h|j|k|l]
@@ -48,6 +49,9 @@ Plug 'spiiph/vim-space'
 " comment using gc<command> or gcc (one line or selection)
 Plug 'tpope/vim-commentary'
 Plug 'mhinz/vim-grepper'
+" EMACS kill-ring emulation
+" Use Meta-p, Meta-shift-p to cycle through yanked elements
+Plug 'maxbrunsfeld/vim-yankstack'
 call plug#end()
 endif
 " }}}
