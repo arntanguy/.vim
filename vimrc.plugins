@@ -15,7 +15,15 @@ Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
 Plug 'honza/vim-snippets'
-Plug 'Chiel92/vim-autoformat'
+" Plug 'Chiel92/vim-autoformat'
+" C/C++ {{{
+    " Formatting with clang-format
+    " Requires: vimproc.vim,  vim-operator-user
+    Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp', 'objc'] }
+
+    " Enhanced syntax highlighting for C++
+    Plug 'octol/vim-cpp-enhanced-highlight'
+  " }}}
 Plug 'benekastah/neomake'
 " Plugin to help manage the pandoc blog
 Plug 'vim-pandoc'
@@ -56,6 +64,13 @@ Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-fugitive'
 " gitk for Vim
 Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+
+" Define your own operator easily
+" Required by: vim
+Plug 'kana/vim-operator-user'
+" Interactive command execution in Vim
+" Required by: vim-clang-format, vim-marching
+Plug 'Shougo/vimproc.vim', { 'do': 'make'}
 
 call plug#end()
 endif

@@ -114,17 +114,15 @@ let g:UltiSnipsEditSplit="vertical"
 " }}}
 
 
-" Astyle {{{
-" let g:formatprg_cpp = "/usr/bin/astyle"
-" let g:formatprg_args_cpp = "--options=/home/arnaud/.nvim/astyle_options"
-" let g:formatprg_ino = "/usr/bin/astyle"
-" let g:formatprg_args_ino = "--options=/home/arnaud/.nvim/astyle_options"
+" Clang-format {{{
+" Fallback: llvm, google, chromium, mozilla
+let g:clang_format#code_style='google'
+let g:clang_format#detect_style_file=1
 
-let g:formatdef_clang_google_cpp = '"clang-format -style=google"'
-let g:formatdef_clang_jrl_cpp = '"clang-format -style=''{BasedOnStyle: Google, BreakBeforeBraces: Allman}''"'
-" let g:formatdef_clang_llvm_cpp = '"clang-format -style=LLVM"'
-let g:formatters_cpp = ['clang_google_cpp', 'clang_jrl_cpp']
-noremap <F3> :Autoformat<CR><CR>
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+noremap <F3> :ClangFormat<CR>
 " }}}
 
 
