@@ -34,8 +34,11 @@ Plug 'DoxygenToolkit.vim'
 " For google prototxt
 Plug 'protodef'
 " Molokai theme
-" Plug 'molokai'
+Plug 'chriskempson/base16-vim'
+Plug 'tomasr/molokai'
 Plug 'nielsmadan/harlequin'
+Plug 'altercation/vim-colors-solarized'
+Plug 'croaker/mustang-vim'
 " CtrlP: easy opening of files
 Plug 'kien/ctrlp.vim'
 Plug 'burke/matcher'
@@ -43,10 +46,19 @@ Plug 'burke/matcher'
 Plug 'szw/vim-ctrlspace'
 "" ROS
 Plug 'taketwo/vim-ros'
+
+" Arduino {{{
 Plug 'jplaut/vim-arduino-ino'
 Plug 'sudar/vim-arduino-syntax'
+" }}}
+
+Plug 'PotatoesMaster/i3-vim-syntax'
+
+" Matlab {{{
 Plug 'geenux/matlab_vim'
 Plug 'elmanuelito/vim-matlab-behave'
+" }}}
+
 Plug 'lervag/vimtex'
 " Seamless navigation between tmux
 " and vim with C-[h|j|k|l]

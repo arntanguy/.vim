@@ -38,7 +38,15 @@ endif
 if has('gui_running')
   set guifont=Inconsolata\ Medium\ 12
 endif
+set background=dark
 colorscheme harlequin
+"colorscheme base16-default
+"colorscheme mustang
+"colorscheme solarized
+"colorscheme molokai
+set cursorline " Highlight current line
+hi CursorLine term=bold cterm=bold guibg=Grey40
+hi YcmErrorLine guibg=#003f00
 " }}}
 
 " vim-commentary {{{
@@ -112,7 +120,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 " }}}
-
+"
 
 " Clang-format {{{
 " Fallback: llvm, google, chromium, mozilla
@@ -285,10 +293,6 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " The various GoTo* subcommands add entries to Vim's jumplist so you can use CTRL-O to jump back to where you where before invoking the command (and CTRL-I to jump forward; see :h jumplist for details).
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
-" disable ycm
-nnoremap <leader>yd :let g:ycm_min_num_of_chars_for_completion=200000000<CR>
-" enable ycm
-nnoremap <leader>ya :let g:ycm_min_num_of_chars_for_completion=2<CR>
 " }}}
 
 
