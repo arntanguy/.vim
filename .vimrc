@@ -14,10 +14,11 @@ set fileencoding=utf-8
 set shell=/bin/bash
 
 " multicore make
-let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo') 
+let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo')
 " let &makeprg = 'make -j4'
 
 let mapleader = ","
+let maplocalleader = ","
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
@@ -56,7 +57,7 @@ autocmd FileType cmake set commentstring=#\ %s
 
 " Vim-grepper {{{
 "
-" <leader>g in normal mode will prompt for a new search term 
+" <leader>g in normal mode will prompt for a new search term
 " <leader>g in visual mode will adopt the current visual selection.
 " <leader>g at the search prompt will switch to the next grep tool.
 " gs is an operator and takes any motion, e.g. gsi( or gsap.
@@ -90,8 +91,6 @@ set statusline+=%{SlSpace()}
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>                " turn off YCM
 nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>                "turn on YCM
-set conceallevel=2
-set concealcursor=vin
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
 " The single one that works with clang_complete
@@ -263,8 +262,24 @@ map ,n :call MatRunCellAdvanced()  <cr><cr>
 " }}}
 
 
-" Latex {{{
+" LaTeX: vimtex {{{
 autocmd BufNewFile,BufRead *.tex set ft=tex
+let g:tex_flavor = 'latex'
+" Quickfix window is opened automatically when there are errors (2), but not
+" focused (1)
+let g:vimtex_quickfix_mode=2
+let g:vimtex_fold_enabled=0
+" Prevents vim from concealing LaTeX code
+let conceallevel=0
+set concealcursor=vin
+
+" enable YCM for latex
+if !exists('g:ycm_semantic_triggers')
+  let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = [
+      \ 're!\\[A-Za-z]*(ref|cite)[A-Za-z]*([^]]*])?{([^}]*, ?)*'
+      \ ]
 " }}}
 
 
@@ -325,3 +340,13 @@ vnoremap <silent> # :<C-U>
       \gV:call setreg('"', old_reg, old_regtype)<CR>
 " }}}
 
+
+function! StripTrailingWhitespace()
+    if !&binary && &filetype != 'diff'
+      normal mz
+      normal Hmy
+      %s/\s\+$//e
+      normal 'yz<CR>
+      normal `z
+    endif
+endfunction
