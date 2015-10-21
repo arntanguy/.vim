@@ -50,6 +50,13 @@ hi CursorLine term=bold cterm=bold guibg=Grey40
 hi YcmErrorLine guibg=#003f00
 " }}}
 
+" yankstack {{{
+" Make yankstack play nice with surround by forcing yankstack
+" to define its key-bindings before surround is loaded.
+" See https://github.com/maxbrunsfeld/vim-yankstack/issues/9 for discussion
+call yankstack#setup()
+" }}}
+
 " vim-commentary {{{
 autocmd FileType c,cpp set commentstring=//\ %s
 autocmd FileType cmake set commentstring=#\ %s
@@ -269,6 +276,14 @@ let g:tex_flavor = 'latex'
 " focused (1)
 let g:vimtex_quickfix_mode=2
 let g:vimtex_fold_enabled=0
+let g:vimtex_latexmk_build_dir = './build'
+let g:vimtex_view_general_viewer = 'qpdfview'
+let g:vimtex_view_general_options = '--unique @pdf\#src:@tex:@line:@col'
+let g:vimtex_view_general_options_latexmk = '--unique'
+
+" Remap double click for latex
+autocmd FileType tex nnoremap <silent> <2-LeftMouse> :VimtexView<CR>
+
 " Prevents vim from concealing LaTeX code
 let conceallevel=0
 set concealcursor=vin
