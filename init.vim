@@ -30,8 +30,8 @@ nnoremap Q @@
 "set mouse=
 
 " Use plugins config {{{
-if filereadable(expand("~/.nvimrc.plugins"))
-  source ~/.nvimrc.plugins
+if filereadable(expand("~/.config/nvim/vimrc.plugins"))
+  source ~/.config/nvim/vimrc.plugins
 endif
 " }}}
 
