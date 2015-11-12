@@ -2,3 +2,4 @@ tags/
 plugged/
 shada/
 autoload/plug.vim
+.netrwhist
