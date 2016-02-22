@@ -35,12 +35,20 @@ Plug 'protodef'
 " Molokai theme
 Plug 'chriskempson/base16-vim'
 Plug 'tomasr/molokai'
-Plug 'nielsmadan/harlequin'
+Plug 'arntanguy/harlequin', { 'branch': 'ycm'}
 Plug 'altercation/vim-colors-solarized'
 Plug 'croaker/mustang-vim'
-" CtrlP: easy opening of files
+" CtrlP: easy opening of files {{{
 Plug 'kien/ctrlp.vim'
-Plug 'burke/matcher'
+" Very fast matching
+Plug 'nixprime/cpsm', { 'do': './install.sh' }
+" Adapted version of CommandT matching
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+" A fast python matcher
+Plug 'FelikZ/ctrlp-py-matcher'
+" Plug 'burke/matcher'
+" }}}
+
 " Ctrl-Space for efficient use of tabs and layout
 Plug 'szw/vim-ctrlspace'
 "" ROS

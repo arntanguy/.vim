@@ -1,12 +1,28 @@
 " ================================================================================
 " =============================== Global Config===================================
 " ================================================================================
-set nocompatible              " be iMproved
+"
+
+" {{{ Make vimrc edition faster:
+" Mapping to open vimrc file
+" Autosource vimrc on save
+nmap <silent>  ;v  :next $MYVIMRC<CR>
+augroup VimReload
+    autocmd!
+    autocmd BufWritePost  $MYVIMRC  source $MYVIMRC
+augroup END
+" }}}
+
+if has('persistent_undo')
+    set undolevels=5000
+    set undodir=$HOME/.VIM_UNDO_FILES
+    set undofile
+endif
+
 set hidden
 filetype plugin indent on     " required!
 filetype off                  " required!
 syntax on
-set enc=utf-8
 " Always display status bar
 set laststatus=2
 set fileencoding=utf-8
@@ -69,11 +85,12 @@ autocmd FileType cmake set commentstring=#\ %s
 " <leader>g at the search prompt will switch to the next grep tool.
 " gs is an operator and takes any motion, e.g. gsi( or gsap.
 " Use <up> and <down> for going through the input history or use <c-f> to open it in the cmdwin.
-nmap <leader>g <plug>(Grepper)
-xmap <leader>g <plug>(Grepper)
-cmap <leader>g <plug>(GrepperNext)
-nmap gs        <plug>(GrepperMotion)
-xmap gs        <plug>(GrepperMotion)
+map <leader>g :Grepper<CR>
+"nmap <leader>g <plug>(Grepper)
+"xmap <leader>g <plug>(Grepper)
+"cmap <leader>g <plug>(GrepperNext)
+"nmap gs        <plug>(GrepperMotion)
+"xmap gs        <plug>(GrepperMotion)
 " }}}
 
 " Vim-airline {{{
@@ -157,6 +174,8 @@ noremap <F12> :cclose<CR>
 " vim-ros {{{
 let g:ros_make = 'current'
 let g:ros_catkin_make_options = '-j4'
+" Somehow doesn't work with python3 in neovim
+let g:ros_use_python_version = 2
 " }}}
 
 " Powerline {{{
@@ -178,29 +197,33 @@ let g:ros_catkin_make_options = '-j4'
 
 
 " Ctrl-P {{{
-" Better matcher for ctrlp
-let g:path_to_matcher = "/usr/local/bin/matcher"
-"let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
-let g:ctrlp_user_command = ['ag -l --nocolor -g ""']
-let g:ctrlp_match_func = { 'match': 'GoodMatch' }
-function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
-  " Create a cache file if not yet exists
-  let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
-  if !( filereadable(cachefile) && a:items == readfile(cachefile) )
-    call writefile(a:items, cachefile)
-  endif
-  if !filereadable(cachefile)
-    return []
-  endif
-  " a:mmode is currently ignored. In the future, we should probably do
-  " something about that. the matcher behaves like "full-line".
-  let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
-  if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
-    let cmd = cmd.'--no-dotfiles '
-  endif
-  let cmd = cmd.a:str
-  return split(system(cmd), "\n")
-endfunction
+" let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
+
+" " Better matcher for ctrlp
+" let g:path_to_matcher = "/usr/local/bin/matcher"
+" "let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files . -co --exclude-standard']
+" let g:ctrlp_user_command = ['ag -l --nocolor -g ""']
+" let g:ctrlp_match_func = { 'match': 'GoodMatch' }
+" function! GoodMatch(items, str, limit, mmode, ispath, crfile, regex)
+"   " Create a cache file if not yet exists
+"   let cachefile = ctrlp#utils#cachedir().'/matcher.cache'
+"   if !( filereadable(cachefile) && a:items == readfile(cachefile) )
+"     call writefile(a:items, cachefile)
+"   endif
+"   if !filereadable(cachefile)
+"     return []
+"   endif
+"   " a:mmode is currently ignored. In the future, we should probably do
+"   " something about that. the matcher behaves like "full-line".
+"   let cmd = g:path_to_matcher.' --limit '.a:limit.' --manifest '.cachefile.' '
+"   if !( exists('g:ctrlp_dotfiles') && g:ctrlp_dotfiles )
+"     let cmd = cmd.'--no-dotfiles '
+"   endif
+"   let cmd = cmd.a:str
+"   return split(system(cmd), "\n")
+" endfunction
 " }}}
 
 " Ctrl-Space {{{
@@ -331,6 +354,7 @@ nnoremap <leader>jd :YcmCompleter GoTo<CR>
 let g:vim_markdown_folding_disabled=1
 " Set initial foldlevel. (default is 0: all closed)
 let g:vim_markdown_initial_foldlevel=1
+au BufNewFile,BufFilePre,BufRead *.md set filetype=markdown
 " }}}
 
 
@@ -341,6 +365,7 @@ let g:vim_markdown_initial_foldlevel=1
 set smartcase
 set hlsearch
 set incsearch
+nmap <silent> <BS>  :nohlsearch<CR>
 
 " Search for selected text, forwards or backwards.
 vnoremap <silent> * :<C-U>
