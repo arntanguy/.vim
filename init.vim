@@ -153,7 +153,7 @@ let g:clang_format#detect_style_file=1
 " map to <Leader>cf in C++ code
 autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
-noremap <F3> :ClangFormat<CR>
+"noremap <F3> :ClangFormat<CR>
 " }}}
 
 
@@ -253,10 +253,8 @@ set history=10000
 " smarter J (mege line)
 set nojoinspaces
 
-"Show the cursor line in an another color
 set number
-"hi CursorLine guibg=#e7ebff
-
+set relativenumber 
 
 " Code {{{
 " Folding

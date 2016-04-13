@@ -18,7 +18,7 @@ Plug 'honza/vim-snippets'
 " C/C++ {{{
     " Formatting with clang-format
     " Requires: vimproc.vim,  vim-operator-user
-    Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp', 'objc'] }
+    Plug 'arntanguy/vim-clang-format', { 'for': ['c', 'cpp', 'objc'] }
 
     " Enhanced syntax highlighting for C++
     Plug 'octol/vim-cpp-enhanced-highlight'
