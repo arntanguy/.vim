@@ -388,3 +388,4 @@ function! StripTrailingWhitespace()
       normal `z
     endif
 endfunction
+autocmd FileType c,cpp autocmd BufWritePre <buffer> :%s/\s\+$//e

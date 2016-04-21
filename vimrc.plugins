@@ -8,7 +8,12 @@ set hidden
 " Start adding Plugs
 if plug#begin('~/.config/nvim/plugged')
 
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" YCM {{{
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Oblitum fork implements argument hints. Check regularely to see when it gets
+" merged to master
+Plug 'oblitum/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" }}}
 Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -22,6 +27,8 @@ Plug 'honza/vim-snippets'
 
     " Enhanced syntax highlighting for C++
     Plug 'octol/vim-cpp-enhanced-highlight'
+    " LLDB Debugging
+    Plug 'critiqjo/lldb.nvim'
   " }}}
 Plug 'benekastah/neomake'
 " Plugin to help manage the pandoc blog
@@ -42,6 +49,8 @@ Plug 'croaker/mustang-vim'
 Plug 'kien/ctrlp.vim'
 " Very fast matching
 Plug 'nixprime/cpsm', { 'do': './install.sh' }
+" Ctrl-Space for efficient use of tabs and layout
+Plug 'vim-ctrlspace/vim-ctrlspace'
 " Adapted version of CommandT matching
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 " A fast python matcher
@@ -49,8 +58,6 @@ Plug 'FelikZ/ctrlp-py-matcher'
 " Plug 'burke/matcher'
 " }}}
 
-" Ctrl-Space for efficient use of tabs and layout
-Plug 'szw/vim-ctrlspace'
 "" ROS
 Plug 'taketwo/vim-ros'
 
