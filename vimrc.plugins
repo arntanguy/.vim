@@ -9,10 +9,10 @@ set hidden
 if plug#begin('~/.config/nvim/plugged')
 
 " YCM {{{
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " Oblitum fork implements argument hints. Check regularely to see when it gets
 " merged to master
-Plug 'oblitum/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Plug 'oblitum/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " }}}
 Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 " Snippets
@@ -23,11 +23,13 @@ Plug 'honza/vim-snippets'
 " C/C++ {{{
     " Formatting with clang-format
     " Requires: vimproc.vim,  vim-operator-user
-    Plug 'arntanguy/vim-clang-format', { 'for': ['c', 'cpp', 'objc'] }
+    Plug 'arntanguy/vim-clang-format', { 'for': ['c', 'cpp', 'objc'], 'branch': 'fix-style-file' }
 
     " Enhanced syntax highlighting for C++
     Plug 'octol/vim-cpp-enhanced-highlight'
     " LLDB Debugging
+    "  If there is a problem with import lldb, do something like
+    "  sudo ln -s /usr/lib/python2.7/dist-packages/lldb-3.9/_lldb.so _lldb.so
     Plug 'critiqjo/lldb.nvim'
   " }}}
 Plug 'benekastah/neomake'
@@ -50,7 +52,7 @@ Plug 'kien/ctrlp.vim'
 " Very fast matching
 Plug 'nixprime/cpsm', { 'do': './install.sh' }
 " Ctrl-Space for efficient use of tabs and layout
-Plug 'vim-ctrlspace/vim-ctrlspace'
+" Plug 'vim-ctrlspace/vim-ctrlspace'
 " Adapted version of CommandT matching
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
 " A fast python matcher
@@ -72,10 +74,6 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'lervag/vimtex'
 " }}}
 
-" Matlab {{{
-Plug 'geenux/matlab_vim'
-Plug 'elmanuelito/vim-matlab-behave'
-" }}}
 
 Plug 'lervag/vimtex'
 " Seamless navigation between tmux
@@ -101,6 +99,12 @@ Plug 'kana/vim-operator-user'
 " Interactive command execution in Vim
 " Required by: vim-clang-format, vim-marching
 Plug 'Shougo/vimproc.vim', { 'do': 'make'}
+
+" Matlab {{{
+" Plug 'daeyun/vim-matlab'
+Plug 'arntanguy/vim-matlab'
+" }}}
+
 
 call plug#end()
 endif

@@ -27,7 +27,7 @@ syntax on
 set laststatus=2
 set fileencoding=utf-8
 "set term=xterm
-set shell=/bin/bash
+" set shell=/bin/zsh
 
 " multicore make
 let &makeprg = 'make -j'.system('grep -c ^processor /proc/cpuinfo')
@@ -76,6 +76,7 @@ call yankstack#setup()
 " vim-commentary {{{
 autocmd FileType c,cpp set commentstring=//\ %s
 autocmd FileType cmake set commentstring=#\ %s
+autocmd FileType matlab setlocal commentstring=%\ %s
 " }}}
 
 " Vim-grepper {{{
@@ -99,14 +100,14 @@ let g:airline#extensions#whitespace#enabled = 0
 " }}}
 
 " Space.vim {{{
-function! SlSpace()
-    if exists("*GetSpaceMovement")
-        return "[" . GetSpaceMovement() . "]"
-    else
-        return ""
-    endif
-endfunc
-set statusline+=%{SlSpace()}
+"function! SlSpace()
+"    if exists("*GetSpaceMovement")
+"        return "[" . GetSpaceMovement() . "]"
+"    else
+"        return ""
+"    endif
+"endfunc
+"set statusline+=%{SlSpace()}
 " }}}
 
 " YCM {{{
@@ -147,7 +148,7 @@ let g:UltiSnipsEditSplit="vertical"
 
 " Clang-format {{{
 " Fallback: llvm, google, chromium, mozilla
-let g:clang_format#code_style='google'
+" let g:clang_format#code_style='google'
 let g:clang_format#detect_style_file=1
 
 " map to <Leader>cf in C++ code
@@ -169,6 +170,18 @@ au FileType qf wincmd J
 noremap <F10> :cclose<CR>:Neomake! <CR>
 noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
+" }}}
+
+" LLDB {{{
+nmap <C-b> <Plug>LLBreakSwitch
+vmap <F2> <Plug>LLStdInSelected
+nnoremap <F4> :LLstdin<CR>
+nnoremap <F5> :LLmode debug<CR>
+nnoremap <S-F5> :LLmode code<CR>
+nnoremap <F8> :LL continue<CR>
+nnoremap <S-F8> :LL process interrupt<CR>
+nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 " }}}
 
 " vim-ros {{{
@@ -274,22 +287,6 @@ set smartindent
 set wildmenu
 set wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz
 
-" Matlab {{{
-source $VIMRUNTIME/macros/matchit.vim
-
-function! MatRunCellAdvanced()
-   execute "!echo \"cd(\'".expand("%:p:h")."\')\">/tmp/buff"
-   :?%%?;/%%/w>> /tmp/buff
-   execute "!echo \"edit ".expand("%:f")."\">>/tmp/buff"
-   !cat /tmp/buff|xclip -selection c
-   !cat /tmp/buff|xclip
-   !quickswitch.py -r MATLAB
-   "!wmctrl -a MATLAB
-endfunction
-map ,n :call MatRunCellAdvanced()  <cr><cr>
-" }}}
-
-
 " LaTeX: vimtex {{{
 autocmd BufNewFile,BufRead *.tex set ft=tex
 let g:tex_flavor = 'latex'
@@ -338,6 +335,7 @@ autocmd BufNewFile,BufRead *.cl set filetype=opencl
 
 " Do not ask for confimation before loading YCM build file
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_key_invoke_completion = '<C-Space>'
 " Close preview window when selection has been made
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
@@ -378,6 +376,16 @@ vnoremap <silent> # :<C-U>
       \gV:call setreg('"', old_reg, old_regtype)<CR>
 " }}}
 
+function ShowSpaces(...)
+  let @/='\v(\s+$)|( +\ze\t)'
+  let oldhlsearch=&hlsearch
+  if !a:0
+    let &hlsearch=!&hlsearch
+  else
+    let &hlsearch=a:1
+  end
+  return oldhlsearch
+endfunction
 
 function! StripTrailingWhitespace()
     if !&binary && &filetype != 'diff'
