@@ -15,6 +15,8 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " Plug 'oblitum/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " }}}
 Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
+" Aligns stuff vertically 
+Plug 'junegunn/vim-easy-align'
 " Snippets
 Plug 'SirVer/ultisnips'
 " Snippets are separated from the engine. Add this if you want them:
@@ -32,15 +34,14 @@ Plug 'honza/vim-snippets'
     "  sudo ln -s /usr/lib/python2.7/dist-packages/lldb-3.9/_lldb.so _lldb.so
     Plug 'critiqjo/lldb.nvim'
   " }}}
-Plug 'benekastah/neomake'
-" Plugin to help manage the pandoc blog
-Plug 'vim-pandoc'
+Plug 'neomake/neomake'
+Plug 'jremmen/vim-ripgrep'
+" 
+Plug 'bkad/CamelCaseMotion'
 " Plug 'petRUShka/vim-opencl'
-Plug 'surround.vim'
-Plug 'DoxygenToolkit.vim'
+Plug 'tpope/vim-surround'
+Plug 'mrtazz/DoxygenToolkit.vim'
 
-" For google prototxt
-Plug 'protodef'
 " Molokai theme
 Plug 'chriskempson/base16-vim'
 Plug 'tomasr/molokai'
@@ -54,14 +55,11 @@ Plug 'nixprime/cpsm', { 'do': './install.sh' }
 " Ctrl-Space for efficient use of tabs and layout
 " Plug 'vim-ctrlspace/vim-ctrlspace'
 " Adapted version of CommandT matching
-Plug 'JazzCore/ctrlp-cmatcher', { 'do': './install.sh' }
+Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'PY3=ON ./install.sh' }
 " A fast python matcher
 Plug 'FelikZ/ctrlp-py-matcher'
 " Plug 'burke/matcher'
 " }}}
-
-"" ROS
-Plug 'taketwo/vim-ros'
 
 " Arduino {{{
 Plug 'jplaut/vim-arduino-ino'
@@ -101,8 +99,8 @@ Plug 'kana/vim-operator-user'
 Plug 'Shougo/vimproc.vim', { 'do': 'make'}
 
 " Matlab {{{
-" Plug 'daeyun/vim-matlab'
-Plug 'arntanguy/vim-matlab'
+Plug 'daeyun/vim-matlab'
+" Plug 'arntanguy/vim-matlab'
 " }}}
 
 

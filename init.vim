@@ -26,6 +26,9 @@ syntax on
 " Always display status bar
 set laststatus=2
 set fileencoding=utf-8
+" Open new split panes to right and bottom, which feels more natural than Vim’s default:
+set splitbelow
+set splitright
 "set term=xterm
 " set shell=/bin/zsh
 
@@ -42,8 +45,8 @@ endif
 " remaps annoying ex mode to repeat macro
 nnoremap Q @@
 
-" Disable mouse support
-"set mouse=
+" Enable mouse support
+set mouse=a
 
 " Use plugins config {{{
 if filereadable(expand("~/.config/nvim/vimrc.plugins"))
@@ -64,6 +67,19 @@ colorscheme harlequin
 set cursorline " Highlight current line
 hi CursorLine term=bold cterm=bold guibg=Grey40
 hi YcmErrorLine guibg=#003f00
+" }}}
+
+" {{{ CamelCase
+" Use default mappings ,w ...
+call camelcasemotion#CreateMotionMappings('<leader>')
+" }}}
+"
+
+" {{{{ EasyAlign
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 " }}}
 
 " yankstack {{{
@@ -99,23 +115,13 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
 " }}}
 
-" Space.vim {{{
-"function! SlSpace()
-"    if exists("*GetSpaceMovement")
-"        return "[" . GetSpaceMovement() . "]"
-"    else
-"        return ""
-"    endif
-"endfunc
-"set statusline+=%{SlSpace()}
-" }}}
-
 " YCM {{{
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
 " with Ctrl-O (Ctrl-I to jump forward)
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>                " turn off YCM
 nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>                "turn on YCM
+nnoremap <leader>fi :YcmCompleter FixIt<CR> "FixIt feature
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
 " The single one that works with clang_complete
@@ -170,6 +176,10 @@ au FileType qf wincmd J
 noremap <F10> :cclose<CR>:Neomake! <CR>
 noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
+
+let g:neomake_verbose = 1
+let g:neomake_serialize = 1
+let g:neomake_serialize_abort_on_error = 1
 " }}}
 
 " LLDB {{{
@@ -190,24 +200,6 @@ let g:ros_catkin_make_options = '-j4'
 " Somehow doesn't work with python3 in neovim
 let g:ros_use_python_version = 2
 " }}}
-
-" Powerline {{{
-""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-"" Not yet compatible with neovim, disable for now
-""" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-"" "Useful status bar
-"" Plug 'Lokaltog/powerline'
-"" set rtp+=~/.nvim/bundle/powerline/powerline/bindings/vim
-"" "set rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
-"" " Always show statusline
-"" set laststatus=2
-"" " Use 256 colours (Use this setting only if your terminal supports 256 colours)
-"" set t_Co=256
-"" let g:Powerline_symbols = 'fancy'
-" }}}
-
-
 
 " Ctrl-P {{{
 " let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
@@ -294,7 +286,7 @@ let g:tex_flavor = 'latex'
 " focused (1)
 let g:vimtex_quickfix_mode=2
 let g:vimtex_fold_enabled=0
-let g:vimtex_latexmk_build_dir = './build'
+let g:vimtex_latexmk_build_dir = 'build'
 let g:vimtex_view_general_viewer = 'qpdfview'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@tex:@line:@col'
 let g:vimtex_view_general_options_latexmk = '--unique'
@@ -316,21 +308,10 @@ let g:ycm_semantic_triggers.tex = [
 " }}}
 
 
-" File type specific {{{
-" GLSL
-"autocmd BufNewFile,BufRead *.frag,*.vert,*.geom,*gp,*.fp,*.vp,*.glsl setf glsl
-
-" Opencl
-autocmd BufNewFile,BufRead *.cl set filetype=opencl
-" }}}
-
-
 " YouCompleteMe (YCM) {{{
 " Read doc for installation and configuration.
 " Short version:
 " - Build with cmake -D CMAKE_EXPORT_COMPILE_COMMANDS="YES"
-" - Create a .ycm_extra_conf.py configuration file at the root of your
-"   develeppement folder
 " - You can use :YcmDiags to see if there were building errors
 
 " Do not ask for confimation before loading YCM build file
@@ -340,10 +321,22 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-" The various GoTo* subcommands add entries to Vim's jumplist so you can use CTRL-O to jump back to where you where before invoking the command (and CTRL-I to jump forward; see :h jumplist for details).
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
+let g:ycm_filetype_whitelist = {
+      \ '*' : 1
+      \}
+let g:ycm_filetype_blacklist = {}
+let g:ycm_complete_in_comments_and_strings=1
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
 " }}}
 
+
+" Matlab {{{
+let g:matlab_auto_mappings = 1 "automatic mappings enabled
+let g:matlab_server_launcher = 'vim'  "launch the server in a Neovim terminal buffer
+" let g:matlab_server_launcher = 'tmux' "launch the server in a tmux split
+let g:matlab_server_split = 'vertical' "launch the server in a vertical split
+" }}}
 
 " Markdown {{{
 " Disable folding
@@ -397,3 +390,17 @@ function! StripTrailingWhitespace()
     endif
 endfunction
 autocmd FileType c,cpp autocmd BufWritePre <buffer> :%s/\s\+$//e
+
+
+" File type specific {{{
+" GLSL
+"autocmd BufNewFile,BufRead *.frag,*.vert,*.geom,*gp,*.fp,*.vp,*.glsl setf glsl
+
+" Opencl
+autocmd BufNewFile,BufRead *.cl set filetype=opencl
+" Json
+autocmd BufNewFile,BufRead *.conf set filetype=json
+autocmd BufNewFile,BufRead *.conf.cmake set filetype=json
+" }}}
+
+
