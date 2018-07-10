@@ -73,14 +73,6 @@ hi YcmErrorLine guibg=#003f00
 " Use default mappings ,w ...
 call camelcasemotion#CreateMotionMappings('<leader>')
 " }}}
-"
-
-" {{{{ EasyAlign
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-" }}}
 
 " yankstack {{{
 " Make yankstack play nice with surround by forcing yankstack
@@ -115,13 +107,23 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#whitespace#enabled = 0
 " }}}
 
+" Space.vim {{{
+"function! SlSpace()
+"    if exists("*GetSpaceMovement")
+"        return "[" . GetSpaceMovement() . "]"
+"    else
+"        return ""
+"    endif
+"endfunc
+"set statusline+=%{SlSpace()}
+" }}}
+
 " YCM {{{
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
 " with Ctrl-O (Ctrl-I to jump forward)
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>                " turn off YCM
 nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>                "turn on YCM
-nnoremap <leader>fi :YcmCompleter FixIt<CR> "FixIt feature
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
 " The single one that works with clang_complete
@@ -173,13 +175,23 @@ let g:neomake_open_list=1
 let g:neomake_list_height=10
 " always open quickfix taking the whole horizontal space available
 au FileType qf wincmd J
-noremap <F10> :cclose<CR>:Neomake! <CR>
+noremap <F10> :cclose<CR>:Neomake! make <CR>
 noremap <F11> :copen<CR>
 noremap <F12> :cclose<CR>
 
 let g:neomake_verbose = 1
 let g:neomake_serialize = 1
 let g:neomake_serialize_abort_on_error = 1
+let g:neomake_make_maker = {
+       \ 'exe': 'make',
+       \ 'args': ['VERBOSE=1'],
+       \ 'errorformat': '%f:%l:%c: %t%.%#: %m,'
+       \               .'%-Gninja%.%#,'
+       \               .'%-Gmake:%.%#,'
+       \               .'%-G[%.%#,'
+       \               .'%-G%.%#recipe for target%.%#',
+       \ 'remove_invalid_entries': get(g:, 'neomake_remove_invalid_entries', 0),
+       \ }
 " }}}
 
 " LLDB {{{
@@ -286,7 +298,7 @@ let g:tex_flavor = 'latex'
 " focused (1)
 let g:vimtex_quickfix_mode=2
 let g:vimtex_fold_enabled=0
-let g:vimtex_latexmk_build_dir = 'build'
+let g:vimtex_latexmk_build_dir = './build'
 let g:vimtex_view_general_viewer = 'qpdfview'
 let g:vimtex_view_general_options = '--unique @pdf\#src:@tex:@line:@col'
 let g:vimtex_view_general_options_latexmk = '--unique'
@@ -308,10 +320,25 @@ let g:ycm_semantic_triggers.tex = [
 " }}}
 
 
+" File type specific {{{
+" GLSL
+"autocmd BufNewFile,BufRead *.frag,*.vert,*.geom,*gp,*.fp,*.vp,*.glsl setf glsl
+
+" Opencl
+autocmd BufNewFile,BufRead *.cl set filetype=opencl
+
+" Json
+autocmd BufNewFile,BufRead *.conf set filetype=json
+autocmd BufNewFile,BufRead *.conf.cmake set filetype=json
+" }}}
+
+
 " YouCompleteMe (YCM) {{{
 " Read doc for installation and configuration.
 " Short version:
 " - Build with cmake -D CMAKE_EXPORT_COMPILE_COMMANDS="YES"
+" - Create a .ycm_extra_conf.py configuration file at the root of your
+"   develeppement folder
 " - You can use :YcmDiags to see if there were building errors
 
 " Do not ask for confimation before loading YCM build file
@@ -321,13 +348,8 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-let g:ycm_filetype_whitelist = {
-      \ '*' : 1
-      \}
-let g:ycm_filetype_blacklist = {}
-let g:ycm_complete_in_comments_and_strings=1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-
+" The various GoTo* subcommands add entries to Vim's jumplist so you can use CTRL-O to jump back to where you where before invoking the command (and CTRL-I to jump forward; see :h jumplist for details).
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
 " }}}
 
 
@@ -369,7 +391,7 @@ vnoremap <silent> # :<C-U>
       \gV:call setreg('"', old_reg, old_regtype)<CR>
 " }}}
 
-function ShowSpaces(...)
+function! ShowSpaces(...)
   let @/='\v(\s+$)|( +\ze\t)'
   let oldhlsearch=&hlsearch
   if !a:0
@@ -390,17 +412,3 @@ function! StripTrailingWhitespace()
     endif
 endfunction
 autocmd FileType c,cpp autocmd BufWritePre <buffer> :%s/\s\+$//e
-
-
-" File type specific {{{
-" GLSL
-"autocmd BufNewFile,BufRead *.frag,*.vert,*.geom,*gp,*.fp,*.vp,*.glsl setf glsl
-
-" Opencl
-autocmd BufNewFile,BufRead *.cl set filetype=opencl
-" Json
-autocmd BufNewFile,BufRead *.conf set filetype=json
-autocmd BufNewFile,BufRead *.conf.cmake set filetype=json
-" }}}
-
-
