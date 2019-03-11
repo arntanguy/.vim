@@ -66,7 +66,8 @@ colorscheme harlequin
 "colorscheme molokai
 set cursorline " Highlight current line
 hi CursorLine term=bold cterm=bold guibg=Grey40
-hi YcmErrorLine guibg=#003f00
+"hi YcmErrorLine guibg=#ffffff
+"hi YcmErrorLine guibg=#af875f
 " }}}
 
 " {{{ CamelCase
@@ -121,9 +122,13 @@ let g:airline#extensions#whitespace#enabled = 0
 " YCM {{{
 " Jumps to definition. Add entries to vim's jump list, so you can jump back
 " with Ctrl-O (Ctrl-I to jump forward)
-nnoremap <leader>jd :YcmCompleter GoTo<CR>
-nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>                " turn off YCM
-nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>                "turn on YCM
+nnoremap <leader>yg :YcmCompleter GoTo<CR>
+nnoremap <leader>yf :YcmCompleter FixIt<CR>
+nnoremap <leader>yd :YcmCompleter GetDoc<CR>
+"nnoremap <leader>y :let g:ycm_auto_trigger=0<CR>                " turn off YCM
+"nnoremap <leader>Y :let g:ycm_auto_trigger=1<CR>                "turn on YCM
+" Go to errors with :lne
+let g:ycm_always_populate_location_list = 1
 let g:clang_snippets=1
 let g:clang_conceal_snippets=1
 " The single one that works with clang_complete
@@ -241,6 +246,21 @@ let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 "   let cmd = cmd.a:str
 "   return split(system(cmd), "\n")
 " endfunction
+" }}}
+
+" {{{ fzf and rg
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 " }}}
 
 " Ctrl-Space {{{

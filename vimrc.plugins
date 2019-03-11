@@ -32,7 +32,7 @@ Plug 'honza/vim-snippets'
     " LLDB Debugging
     "  If there is a problem with import lldb, do something like
     "  sudo ln -s /usr/lib/python2.7/dist-packages/lldb-3.9/_lldb.so _lldb.so
-    Plug 'critiqjo/lldb.nvim'
+    " Plug 'critiqjo/lldb.nvim'
   " }}}
 Plug 'neomake/neomake'
 Plug 'jremmen/vim-ripgrep'
@@ -60,6 +60,9 @@ Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'PY3=ON ./install.sh' }
 Plug 'FelikZ/ctrlp-py-matcher'
 " Plug 'burke/matcher'
 " }}}
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Arduino {{{
 Plug 'jplaut/vim-arduino-ino'
