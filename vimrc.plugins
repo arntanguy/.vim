@@ -8,13 +8,16 @@ set hidden
 " Start adding Plugs
 if plug#begin('~/.config/nvim/plugged')
 
-" YCM {{{
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" Oblitum fork implements argument hints. Check regularely to see when it gets
-" merged to master
-" Plug 'oblitum/YouCompleteMe', { 'do': './install.py --clang-completer' }
-" }}}
-Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
+" " YCM {{{
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" " Oblitum fork implements argument hints. Check regularely to see when it gets
+" Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
+" " }}}
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" To install language server
+" sudo snap install ccls --classic
+
 " Aligns stuff vertically 
 Plug 'junegunn/vim-easy-align'
 " Snippets
@@ -53,7 +56,6 @@ Plug 'kien/ctrlp.vim'
 " Very fast matching
 Plug 'nixprime/cpsm', { 'do': './install.sh' }
 " Ctrl-Space for efficient use of tabs and layout
-" Plug 'vim-ctrlspace/vim-ctrlspace'
 " Adapted version of CommandT matching
 Plug 'JazzCore/ctrlp-cmatcher', { 'do': 'PY3=ON ./install.sh' }
 " A fast python matcher
@@ -74,6 +76,9 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 " LaTeX support {{{
 Plug 'lervag/vimtex'
 " }}}
+"
+
+Plug 'liuchengxu/vim-which-key'
 
 
 Plug 'lervag/vimtex'
@@ -82,10 +87,8 @@ Plug 'lervag/vimtex'
 Plug 'christoomey/vim-tmux-navigator'
 
 Plug 'bling/vim-airline'
-Plug 'spiiph/vim-space'
 " comment using gc<command> or gcc (one line or selection)
 Plug 'tpope/vim-commentary'
-Plug 'mhinz/vim-grepper'
 " EMACS kill-ring emulation
 " Use Meta-p, Meta-shift-p to cycle through yanked elements
 Plug 'maxbrunsfeld/vim-yankstack'
