@@ -34,6 +34,7 @@ endif
 source ~/.config/nvim/modules/coc.vim
 source ~/.config/nvim/modules/latex.vim
 source ~/.config/nvim/modules/vim-whichkey.vim
+source ~/.config/nvim/modules/firenvim.vim
 
 set hidden
 filetype plugin indent on     " required!

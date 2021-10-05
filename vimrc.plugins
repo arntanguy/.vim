@@ -5,16 +5,27 @@
 set nocompatible              " be iMproved
 set hidden
 
+if exists('g:vscode')
+    " VSCode extension
+    echo "Running in vscode"
+elseif exists('g:started_by_firenvim')
+    echo "Running in firenvim"
+else
+    " ordinary neovim
+
 " Start adding Plugs
 if plug#begin('~/.config/nvim/plugged')
+
+" For embedding neovim into firefox
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " " YCM {{{
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " " Oblitum fork implements argument hints. Check regularely to see when it gets
 " Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 " " }}}
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
 " To install language server
 " sudo snap install ccls --classic
 
@@ -112,4 +123,6 @@ Plug 'daeyun/vim-matlab'
 
 call plug#end()
 endif
+endif " normal neovim
+
 " }}}
