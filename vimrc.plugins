@@ -17,7 +17,7 @@ else
 if plug#begin('~/.config/nvim/plugged')
 
 " For embedding neovim into firefox
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+"Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 " " YCM {{{
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
@@ -25,6 +25,10 @@ Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Plug 'rdnetto/YCM-Generator', { 'branch':  'stable' }
 " " }}}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 " To install language server
 " sudo apt install ccls
