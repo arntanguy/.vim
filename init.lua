@@ -8,9 +8,14 @@ require('utils')
 require('telescopeConfig')
 -- Language Server Protocol (uses external language servers to handle compilation and completion)
 -- Uses vim-cmp for code completion
+require('cmpConfig')
 -- For c++ this uses clangd LSP
+require('lsp-kindConfig')
 require('lspconfigConfig')
 require('clang-format')
+require('lualineConfig')
+require('autotagConfig')
+require('autopairConfig')
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -31,7 +36,15 @@ vim.opt.undofile=true
 vim.opt.mouse='a' -- enable mouse support
 
 -- Appearance
-vim.cmd('colorscheme harlequin')
+-- Lua:
+-- vim.cmd[[colorscheme dracula]]
+-- vim.cmd[[colorscheme tokyonight-moon]]
+-- vim.cmd[[colorscheme tokyonight-night]]
+--
+-- vim.cmd[[colorscheme tokyonight-storm]]
+-- vim.cmd[[colorscheme nightfox]]
+vim.cmd[[colorscheme duskfox]]
+-- vim.cmd('colorscheme harlequin')
 vim.opt.cursorline=true -- " highlight current line
 vim.cmd('hi CursorLine term=bold cterm=bold guibg=Grey40')
 vim.opt.number=true -- show line number

@@ -1,15 +1,4 @@
 local lspconfig = require'lspconfig'
-local cmp = require'cmp'
-
-cmp.setup {
-  sources = {
-    { name = 'nvim_lsp' }
-  }
-}
-
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -50,11 +39,12 @@ end
 lspconfig.pyright.setup{}
 
 -- C++ Compilation
-local ccls_capabilities = capabilities
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- ccls_capabilities.offsetEncoding = "utf-8"
 lspconfig.ccls.setup{
   on_attach = on_attach,
-  capabilities = ccls_capabilities
+  capabilities = capabilities
 }
 
 -- The following example advertise capabilities to `clangd`.
@@ -73,7 +63,7 @@ lspconfig.clangd.setup {
 local sumneko_root_path = os.getenv("HOME") ..
                               "/src/ext/lua-language-server"
 local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
-lspconfig.sumneko_lua.setup({
+lspconfig.lua_ls.setup({
     cmd = {sumneko_binary, "-E", sumneko_root_path .. "/main.lua"},
     capabilities = capabilities,
     settings = {

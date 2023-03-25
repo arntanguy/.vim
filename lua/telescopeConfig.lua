@@ -6,6 +6,7 @@ nmap('ff', builtin.find_files, {})
 nmap('fg', builtin.live_grep, {})
 nmap('fb', builtin.buffers, {})
 nmap('fh', builtin.help_tags, {})
+nmap('fr', builtin.resume, {})
 
 -- To get telescope-file-browser loaded and working with telescope,
 -- you need to call load_extension, somewhere after setup function:

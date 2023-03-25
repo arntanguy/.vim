@@ -15,17 +15,27 @@ packer.init({
 })
 --- startup and add configure plugins
 packer.startup(function()
-  local use = use
+  local use = packer.use
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-file-browser.nvim'
 
+  -- Color scheme
+  use 'Mofiqul/dracula.nvim'
+  use 'folke/tokyonight.nvim'
+  use "EdenEast/nightfox.nvim"
+
+  -- Visualize cursor when jumping far
+  use 'danilamihailov/beacon.nvim'
+
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
-  
+  use 'onsails/lspkind.nvim' -- Add vscode icons to LSP
+
   use {
     'hrsh7th/nvim-cmp',
+    -- config = function() require('lua.cmpConfig') end,
     requires = {
       {
         'hrsh7th/cmp-nvim-lsp'
@@ -47,11 +57,27 @@ packer.startup(function()
   -- Aligns stuff vertically 
   use 'junegunn/vim-easy-align'
   -- Snippets
-  use 'SirVer/ultisnips'
+  -- use 'SirVer/ultisnips'
   -- Snippets are separated from the engine. Add this if you want them:
-  use 'honza/vim-snippets'
+  -- use 'honza/vim-snippets'
   -- Enhanced syntax highlighting for C++
-  use 'octol/vim-cpp-enhanced-highlight'
+  -- use 'octol/vim-cpp-enhanced-highlight'
+
+  -- use { 'saadparwaiz1/cmp_luasnip' }
+  -- use {
+  --     'L3MON4D3/LuaSnip',
+  --     version = 'v1.2.1',
+  --     -- opt = false,
+  --     -- after = 'nvim-cmp',
+  --     config = function() require('lua.cmpConfig') end,
+  -- }
+
+  -- WebDev
+  use {'windwp/nvim-ts-autotag',
+    requires = {'nvim-treesitter/nvim-treesitter'}}
+
+  use 'windwp/nvim-autopairs'
+
   -- Code
   use 'neomake/neomake'
   use 'bkad/CamelCaseMotion'
@@ -66,7 +92,12 @@ packer.startup(function()
   use {'arntanguy/harlequin', branch = 'ycm'}
   use 'altercation/vim-colors-solarized'
   use 'croaker/mustang-vim'
-  use 'bling/vim-airline'
+--  use 'bling/vim-airline'
+  use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+
   -- I3
   use 'PotatoesMaster/i3-vim-syntax'
   -- LaTeX support
