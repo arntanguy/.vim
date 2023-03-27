@@ -1,4 +1,5 @@
-local lspconfig = require'lspconfig'
+local lspconfig = require('lspconfig')
+local navbuddy = require('nvim-navbuddy')
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -17,22 +18,25 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  function bufopts(desc)
+    return { noremap=true, silent=true, buffer=bufnr, desc = desc }
+  end
+  -- local bufopts = 
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts("[LSP] Go to declaration"))
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts("[LSP] Go to definition"))
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts("[LSP] Manual Hover"))
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts("[LSP] Go to implementation"))
+  -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts("[LSP] Show signature"))
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts("[LSP] Add workspace folder"))
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts("[LSP] Remove workspace folder"))
   vim.keymap.set('n', '<space>wl', function()
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  end, bufopts("[LSP] List workspace folders"))
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts("[LSP] Type definition"))
+  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts('[LSP] Rename'))
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts('[LSP] Code action'))
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts('[LSP] References'))
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts('[LSP] Format'))
 end
 
 -- python
@@ -44,7 +48,12 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- ccls_capabilities.offsetEncoding = "utf-8"
 lspconfig.ccls.setup{
   on_attach = on_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
+  init_options = {
+    highlight = {
+      lsRanges = true
+    }
+  }
 }
 
 -- The following example advertise capabilities to `clangd`.
@@ -54,6 +63,9 @@ clangd_capabilities.offsetEncoding = "utf-16"
 lspconfig.clangd.setup {
   cmd = { "/usr/bin/clangd-12" },
   capabilities = clangd_capabilities,
+  on_attach = function(client, bufnr)
+    navbuddy.attach(client, bufnr)
+  end
 }
 
 

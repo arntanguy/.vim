@@ -16,6 +16,7 @@ require('clang-format')
 require('lualineConfig')
 require('autotagConfig')
 require('autopairConfig')
+require('navbuddyConfig')
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','

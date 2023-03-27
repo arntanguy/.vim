@@ -4,6 +4,7 @@
       "command": "ccls",
       "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
       "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "highlight": { "lsRanges" : true },
       "initializationOptions": {
         "cache": {
           "directory": ".ccls-cache"

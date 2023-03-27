@@ -20,7 +20,20 @@ packer.startup(function()
   use 'wbthomason/packer.nvim'
   use 'nvim-lua/plenary.nvim'
   use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
+  use {
+      "nvim-telescope/telescope-file-browser.nvim",
+      requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  }
+
+  -- Lua
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+      require("which-key").setup {}
+    end
+  }
 
   -- Color scheme
   use 'Mofiqul/dracula.nvim'
@@ -32,6 +45,25 @@ packer.startup(function()
 
   use 'neovim/nvim-lspconfig' -- Configurations for Nvim LSP
   use 'onsails/lspkind.nvim' -- Add vscode icons to LSP
+
+  use {
+    "SmiteshP/nvim-navbuddy",
+    requires = {
+        "neovim/nvim-lspconfig",
+        "SmiteshP/nvim-navic",
+        "MunifTanjim/nui.nvim"
+        -- "numToStr/Comment.nvim"
+    }
+  }
+
+  use 'jackguo380/vim-lsp-cxx-highlight'
+
+  use {
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  }
 
   use {
     'hrsh7th/nvim-cmp',
@@ -48,6 +80,9 @@ packer.startup(function()
       },
       {
         'hrsh7th/cmp-cmdline'
+      },
+      {
+        'hrsh7th/cmp-nvim-lsp-signature-help'
       }
     }
   }
@@ -73,8 +108,7 @@ packer.startup(function()
   -- }
 
   -- WebDev
-  use {'windwp/nvim-ts-autotag',
-    requires = {'nvim-treesitter/nvim-treesitter'}}
+  use {'windwp/nvim-ts-autotag', requires = {'nvim-treesitter/nvim-treesitter'}}
 
   use 'windwp/nvim-autopairs'
 
@@ -84,7 +118,7 @@ packer.startup(function()
   use 'tpope/vim-surround'
   use 'mrtazz/DoxygenToolkit.vim'
   -- comment using gc<command> or gcc (one line or selection)
-  use 'tpope/vim-commentary'
+  -- use 'tpope/vim-commentary'
   -- theme
   -- Molokai theme
   use 'chriskempson/base16-vim'
