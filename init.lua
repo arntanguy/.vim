@@ -8,15 +8,22 @@ require('utils')
 require('telescopeConfig')
 -- Language Server Protocol (uses external language servers to handle compilation and completion)
 -- Uses vim-cmp for code completion
-require('cmpConfig')
+-- require('cmpConfig')
 -- For c++ this uses clangd LSP
-require('lsp-kindConfig')
-require('lspconfigConfig')
+-- require('lspconfigConfig')
 require('clang-format')
 require('lualineConfig')
 require('autotagConfig')
 require('autopairConfig')
 require('navbuddyConfig')
+require('snippets')
+
+-- LSP and Completion
+require('lsp-zeroConfig')
+-- require('lsp-kindConfig')
+-- require('treesitterConfig')
+
+vim.cmd('autocmd BufNewFile,BufRead *.body set filetype=yaml')
 
 vim.g.mapleader = ','
 vim.g.maplocalleader = ','
@@ -33,8 +40,6 @@ nmap('[q', ':cp<CR>')
 vim.opt.undolevels=5000
 vim.opt.undodir=os.getenv("HOME") .. '/.VIM_UNDO_FILES'
 vim.opt.undofile=true
-
-vim.opt.mouse='a' -- enable mouse support
 
 -- Appearance
 -- Lua:

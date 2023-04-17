@@ -1,0 +1,28 @@
+## lsp-zero @quick @reference
+Install a new language (with mason)                                                                 | :LspInstall
+Displays hover information about the symbol under the cursor in a floating window                   | K
+Jumps to the definition of the symbol under the cursor                                              | gd
+Jumps to the declaration of the symbol under the cursor (some servers don't implement this feature) | gD
+Lists all the implementations for the symbol under the cursor in the quickfix window                | gi
+Jumps to the definition of the type of the symbol under the cursor                                  | go
+Lists all the references to the symbol under the cursor in the quickfix window                      | gr
+Displays signature information about the symbol under the cursor in a floating window               | gs
+Renames all references to the symbol under the cursor                                               | <F2>
+Format code in current buffer                                                                       | <F3>
+Selects a code action available at the current cursor position                                      | <F4>
+Show diagnostics in a floating window                                                               | gl
+Move to the previous diagnostic in the current buffer                                               | [d
+Move to the next diagnostic                                                                         | ]d
+
+## nvim-cmp
+Confirms selection                                   | <Ctrl-y>
+Cancel completion                                    | <Ctrl-e>
+Navigate to the next item on the list                | <Down>
+Navigate to previous item on the list                | <Up>
+Go to the next item (or trigger completion menu)     | <Ctrl-n>
+Go to the previous item (or trigger completion menu) | <Ctrl-p>
+Scroll down the documentation window                 | <Ctrl-d>
+Scroll up the documentation window                   | <Ctrl-u>
+
+## navbuddy
+Open navbuddy | fn 
