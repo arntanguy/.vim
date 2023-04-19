@@ -54,8 +54,16 @@ vim.cmd[[colorscheme duskfox]]
 -- vim.cmd('colorscheme harlequin')
 vim.opt.cursorline=true -- " highlight current line
 vim.cmd('hi CursorLine term=bold cterm=bold guibg=Grey40')
-vim.opt.number=true -- show line number
-vim.opt.relativenumber=true -- show numbers relative to current line
+function ShowLineNumbers()
+  vim.opt.number=true -- show line number
+  vim.opt.relativenumber=true -- show numbers relative to current line
+end
+function HideLineNumbers()
+  vim.opt.number=false -- show line number
+  vim.opt.relativenumber=false -- show numbers relative to current line
+end
+nmap('sn', ShowLineNumbers, { desc = 'Show line numbers'})
+nmap('hn', HideLineNumbers, { desc = 'Hide line numbers'})
 -- Folding
 vim.opt.foldmethod='syntax'
 -- All folds open by default
