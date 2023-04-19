@@ -27,6 +27,10 @@ packer.startup(function()
       requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   }
 
+  use {
+    "Shatur/neovim-tasks",
+    requires = { "nvim-lua/plenary.nvim" }
+  }
   -- CheatSheet
   use {
     'sudormrfbin/cheatsheet.nvim',
@@ -135,7 +139,6 @@ packer.startup(function()
   use 'windwp/nvim-autopairs'
 
   -- Code
-  use 'neomake/neomake'
   use 'bkad/CamelCaseMotion'
   use 'tpope/vim-surround'
   use 'mrtazz/DoxygenToolkit.vim'

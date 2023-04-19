@@ -17,6 +17,7 @@ require('autotagConfig')
 require('autopairConfig')
 require('navbuddyConfig')
 require('snippets')
+require('tasksConfig')
 
 -- LSP and Completion
 require('lsp-zeroConfig')
