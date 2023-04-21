@@ -13,6 +13,8 @@ Selects a code action available at the current cursor position                  
 Show diagnostics in a floating window                                                               | gl
 Move to the previous diagnostic in the current buffer                                               | [d
 Move to the next diagnostic                                                                         | ]d
+Move between header/source (:ClangdSwitchSourceHeader)                                              | gh
+
 
 ## nvim-cmp
 Confirms selection                                   | <Ctrl-y>

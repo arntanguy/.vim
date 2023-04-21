@@ -35,8 +35,17 @@ lspconfig.yamlls.setup {
 }
 
 
+-- require('lspconfig').clangd.setup({
+--     cmd = {
+--         "clangd",
+--         "--clang-tidy"
+--     }
+-- })
+
+
 lsp.setup()
 
+nmap('gh', ':ClangdSwitchSourceHeader<CR>', { desc = 'Switch between source/header (clang)'});
 
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
