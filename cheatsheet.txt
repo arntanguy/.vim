@@ -26,3 +26,25 @@ Scroll up the documentation window                   | <Ctrl-u>
 
 ## navbuddy
 Open navbuddy | fn 
+
+## telescope
+Send to quickfix                                      | <Ctrl-q>
+Next item                                             | <C-n>/<Down>
+Previous item                                         | <C-p>/<Up>
+Next/previous (in normal mode)                        | j/k
+Select High/Middle/Low (in normal mode)               | H/M/L
+Select the first/last item (in normal mode)           | gg/G
+Confirm selection                                     | <CR>
+Go to file selection as a split                       | <C-x>
+Go to file selection as a vsplit                      | <C-v>
+Go to a file in a new tab                             | <C-t>
+Scroll up in preview window                           | <C-u>
+Scroll down in preview window                         | <C-d>
+Show mappings for picker actions (insert mode)        | <C-/>
+Show mappings for picker actions (normal mode)        | ?
+Close telescope                                       | <C-c>
+Close telescope (in normal mode)                      | <Esc>
+Toggle selection and move to next selection           | <Tab>
+Toggle selection and move to prev selection           | <S-Tab>
+Send all items not filtered to quickfixlist (qflist)  | <C-q>
+Send all selected items to qflist                     | <M-q>
